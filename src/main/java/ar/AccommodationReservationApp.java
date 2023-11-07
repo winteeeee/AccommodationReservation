@@ -2,6 +2,7 @@ package ar;
 
 import ar.boundary.Boundary;
 import ar.boundary.MainBoundary;
+import ar.util.Dummy;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,6 +18,8 @@ public class AccommodationReservationApp {
     }
 
     public void run() {
+        Dummy.dataInsert();
+
         while (true) {
             boundary.run(this);
         }

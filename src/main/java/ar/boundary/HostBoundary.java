@@ -1,19 +1,26 @@
 package ar.boundary;
 
 import ar.AccommodationReservationApp;
+import ar.control.AccommodationControl;
 import ar.control.HostControl;
+import ar.entity.Accommodation;
 import ar.entity.Host;
 import ar.util.ErrorMessages;
 import ar.util.Keyboard;
 
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class HostBoundary implements Boundary {
+    private Host host;
     private Scanner sc = Keyboard.getInstance();
     private HostControl hostControl;
+    private AccommodationControl accommodationControl;
 
     public HostBoundary() {
+        host = null;
         hostControl = new HostControl();
+        accommodationControl = new AccommodationControl();
     }
 
     private Host login() {
@@ -37,6 +44,47 @@ public class HostBoundary implements Boundary {
         return result;
     }
 
+    private void registHouse(Host host) {
+        sc.nextLine();
+        System.out.println("==============================");
+        System.out.println("숙소를 등록합니다.");
+        System.out.println("==============================");
+        System.out.print("숙소 이름 입력 : ");
+        String name = sc.nextLine();
+        System.out.print("숙소 주소 입력 : ");
+        String address = sc.nextLine();
+        System.out.print("수용 인원 입력 : ");
+        Integer accommodatedPerson = sc.nextInt();
+        System.out.print("방 개수 입력 : ");
+        Integer room = sc.nextInt();
+        System.out.print("침실 개수 입력 : ");
+        Integer bedroom = sc.nextInt();
+        System.out.print("욕실 개수 입력 : ");
+        Integer bathroom = sc.nextInt(); sc.nextLine();
+        System.out.print("숙소 소개 입력 : ");
+        String introduction = sc.nextLine();
+        System.out.print("평일 요금 입력 : ");
+        BigDecimal weekdayFare = sc.nextBigDecimal();
+        System.out.print("주말 요금 입력 : ");
+        BigDecimal weekendFare = sc.nextBigDecimal();
+
+        Accommodation house = Accommodation.builder()
+                .name(name)
+                .address(address)
+                .host(host)
+                .accommodatedPerson(accommodatedPerson)
+                .room(room)
+                .bedroom(bedroom)
+                .bed(bedroom)
+                .bathroom(bathroom)
+                .introduction(introduction)
+                .weekdayFare(weekdayFare)
+                .weekendFare(weekendFare).build();
+
+        accommodationControl.save(house);
+        System.out.println("숙소가 성공적으로 등록되었습니다!");
+    }
+
     @Override
     public void run(AccommodationReservationApp app) {
         final int REGIST_HOUSE = 1;
@@ -44,7 +92,9 @@ public class HostBoundary implements Boundary {
         final int SHOW_REVENUE = 3;
         final int LOGOUT = 4;
 
-        Host host = login();
+        if (host == null) {
+            host = login();
+        }
 
         System.out.println("==============================");
         System.out.println(host.getName() + " 호스트님 환영합니다.");
@@ -57,7 +107,7 @@ public class HostBoundary implements Boundary {
 
         int command = sc.nextInt();
         if (command == REGIST_HOUSE) {
-            // TODO 구현
+            registHouse(host);
         } else if (command == SET_DISCOUNT_POLICY) {
             // TODO 구현
         } else if (command == SHOW_REVENUE) {
