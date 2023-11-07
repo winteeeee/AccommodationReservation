@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Guest extends Member {

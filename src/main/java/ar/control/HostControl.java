@@ -11,7 +11,6 @@ public class HostControl extends Control<Host, String>{
     @Override
     public List<Host> findAll() {
         ReturnTransaction<List<Host>> fun = () -> {
-            em = emf.createEntityManager();
             TypedQuery<Host> query = em.createQuery("SELECT h FROM Host h", Host.class);
             return query.getResultList();
         };
@@ -22,7 +21,6 @@ public class HostControl extends Control<Host, String>{
     @Override
     public Host findById(String id) {
         ReturnTransaction<List<Host>> fun = () -> {
-            em = emf.createEntityManager();
             List<Host> result = new ArrayList<>();
             result.add(em.find(Host.class, id));
             return result;

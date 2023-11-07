@@ -11,6 +11,7 @@ public abstract class Control<T, K> {
     protected EntityManager em;
 
     protected void transactionStart(VoidTransaction fun) {
+        em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
 
         try {
@@ -25,6 +26,7 @@ public abstract class Control<T, K> {
     }
 
     protected List<T> transactionStart(ReturnTransaction<List<T>> fun) {
+        em = emf.createEntityManager();
         EntityTransaction tx = em.getTransaction();
         List<T> result = null;
 
@@ -43,28 +45,24 @@ public abstract class Control<T, K> {
 
     public void save(T entity) {
         transactionStart(() -> {
-            em = emf.createEntityManager();
             em.persist(entity);
         });
     }
 
     public void save(List<T> entities) {
         transactionStart(() -> {
-            em = emf.createEntityManager();
             entities.forEach((e) -> em.persist(e));
         });
     }
 
     public void remove(T entity) {
         transactionStart(() -> {
-            em = emf.createEntityManager();
             em.remove(entity);
         });
     }
 
     public void remove(List<T> entities) {
         transactionStart(() -> {
-            em = emf.createEntityManager();
             entities.forEach((e) -> em.remove(e));
         });
     }

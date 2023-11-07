@@ -24,9 +24,9 @@ public class HostBoundary implements Boundary {
             System.out.println("호스트로 로그인합니다.");
             System.out.println("==============================");
             System.out.print("아이디 입력 : ");
-            String id = sc.nextLine();
+            String id = sc.next();
             System.out.print("비밀번호 입력 : ");
-            String password = sc.nextLine();
+            String password = sc.next();
 
             result = hostControl.login(id, password);
             if (result == null) {
