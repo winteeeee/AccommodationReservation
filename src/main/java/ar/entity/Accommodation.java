@@ -15,6 +15,8 @@ public class Accommodation {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @Enumerated(EnumType.STRING)
+    private SpaceType spaceType;
     private String name;
     private String address;
     @ManyToOne

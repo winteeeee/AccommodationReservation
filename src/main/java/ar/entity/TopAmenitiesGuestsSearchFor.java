@@ -16,16 +16,16 @@ public class TopAmenitiesGuestsSearchFor {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Boolean pool;
-    private Boolean wifi;
-    private Boolean kitchen;
-    private Boolean freeParking;
-    private Boolean jacuzzi;
-    private Boolean washerOfDryer;
-    private Boolean airConditioningOrHeating;
-    private Boolean selfCheckIn;
-    private Boolean laptopFriendlyWorkspace;
-    private Boolean petsAllowed;
+    private boolean pool;
+    private boolean wifi;
+    private boolean kitchen;
+    private boolean freeParking;
+    private boolean jacuzzi;
+    private boolean washerOfDryer;
+    private boolean airConditioningOrHeating;
+    private boolean selfCheckIn;
+    private boolean laptopFriendlyWorkspace;
+    private boolean petsAllowed;
     @OneToOne
     private Accommodation accommodation;
 }

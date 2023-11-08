@@ -1,9 +1,7 @@
 package ar.control;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Control<T, K> {
@@ -67,6 +65,21 @@ public abstract class Control<T, K> {
         });
     }
 
-    public abstract List<T> findAll();
-    public abstract T findById(K id);
+    public List<T> findAll(Class<T> c) {
+        ReturnTransaction<List<T>> fun = () -> {
+            TypedQuery<T> query = em.createQuery("SELECT a FROM " + c.getName() + " a", c);
+            return query.getResultList();
+        };
+
+        return transactionStart(fun);
+    }
+    public T findById(Class<T> c, K id) {
+        ReturnTransaction<List<T>> fun = () -> {
+            List<T> result = new ArrayList<>();
+            result.add(em.find(c, id));
+            return result;
+        };
+
+        return transactionStart(fun).get(0);
+    }
 }

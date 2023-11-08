@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @NoArgsConstructor
@@ -19,9 +16,11 @@ public class SafetyAmenities {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Boolean carbonMonoxideAlarm;
-    private Boolean smokeAlarm;
-    private Boolean fireExtinguisher;
-    private Boolean firstAidKit;
-    private Boolean emergencyPlanAndLocalNumbers;
+    private boolean carbonMonoxideAlarm;
+    private boolean smokeAlarm;
+    private boolean fireExtinguisher;
+    private boolean firstAidKit;
+    private boolean emergencyPlanAndLocalNumbers;
+    @OneToOne
+    private Accommodation accommodation;
 }

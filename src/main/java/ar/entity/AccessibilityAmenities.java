@@ -16,10 +16,10 @@ public class AccessibilityAmenities {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Boolean stepFreeEntryway;
-    private Boolean wideEntrances;
-    private Boolean wideHallways;
-    private Boolean accessibleBathroom;
+    private boolean stepFreeEntryway;
+    private boolean wideEntrances;
+    private boolean wideHallways;
+    private boolean accessibleBathroom;
     @OneToOne
     private Accommodation accommodation;
 }

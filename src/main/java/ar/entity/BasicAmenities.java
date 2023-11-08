@@ -16,12 +16,12 @@ public class BasicAmenities {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Boolean toiletPaper;
-    private Boolean soapForHandsAndBody;
-    private Boolean oneTowelPerGuest;
-    private Boolean linensForEachBed;
-    private Boolean onePillowPerGuest;
-    private Boolean cleaningSupplies;
+    private boolean toiletPaper;
+    private boolean soapForHandsAndBody;
+    private boolean oneTowelPerGuest;
+    private boolean linensForEachBed;
+    private boolean onePillowPerGuest;
+    private boolean cleaningSupplies;
     @OneToOne
     private Accommodation accommodation;
 }
