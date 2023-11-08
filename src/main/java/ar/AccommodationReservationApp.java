@@ -14,14 +14,14 @@ public class AccommodationReservationApp {
     private Boundary boundary;
 
     public AccommodationReservationApp() {
-        boundary = new MainBoundary();
+        boundary = new MainBoundary(this);
     }
 
     public void run() {
         Dummy.dataInsert();
 
         while (true) {
-            boundary.run(this);
+            boundary.run();
         }
     }
 }

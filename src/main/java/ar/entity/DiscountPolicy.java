@@ -19,8 +19,9 @@ public class DiscountPolicy {
     private Long id;
     @Embedded
     private DateInfo dateInfo;
+    private Boolean isQuantitativeDiscount;
     private BigDecimal quantitativeDiscount;
-    private Double fixedRateDiscount;
+    private BigDecimal fixedRateDiscount;
     @OneToOne
     private Accommodation accommodation;
 }

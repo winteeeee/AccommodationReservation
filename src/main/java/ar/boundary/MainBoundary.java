@@ -6,11 +6,15 @@ import ar.util.Keyboard;
 
 import java.util.Scanner;
 
-public class MainBoundary implements Boundary {
+public class MainBoundary extends Boundary {
     private Scanner sc = Keyboard.getInstance();
 
+    public MainBoundary(AccommodationReservationApp app) {
+        super(app);
+    }
+
     @Override
-    public void run(AccommodationReservationApp app) {
+    public void run() {
         final int HOST_LOGIN = 1;
         final int GUEST_LOGIN = 2;
         final int QUIT = 3;
@@ -25,9 +29,9 @@ public class MainBoundary implements Boundary {
 
         int command = sc.nextInt();
         if (command == HOST_LOGIN) {
-            app.setBoundary(new HostBoundary());
+            app.setBoundary(new HostBoundary(app, this));
         } else if (command == GUEST_LOGIN) {
-            app.setBoundary(new GuestBoundary());
+            // TODO app.setBoundary(new GuestBoundary());
         } else if (command == QUIT) {
             System.exit(0);
         } else {

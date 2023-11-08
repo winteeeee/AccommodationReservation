@@ -1,12 +1,13 @@
 package ar.control;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Control<T, K> {
     protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ar");
-    protected EntityManager em;
+    protected static EntityManager em;
 
     protected void transactionStart(VoidTransaction fun) {
         em = emf.createEntityManager();
@@ -41,16 +42,27 @@ public abstract class Control<T, K> {
         return result;
     }
 
-    public void save(T entity) {
-        transactionStart(() -> {
-            em.persist(entity);
-        });
+    public T save(T entity) {
+        ReturnTransaction<List<T>> fun = () -> {
+            List<T> list = new ArrayList<>();
+            list.add(em.merge(entity));
+            return list;
+        };
+
+        return transactionStart(fun).get(0);
     }
 
-    public void save(List<T> entities) {
-        transactionStart(() -> {
-            entities.forEach((e) -> em.persist(e));
-        });
+    public List<T> save(List<T> entities) {
+        ReturnTransaction<List<T>> fun = () -> {
+            List<T> list = new ArrayList<>();
+            entities.forEach((e) -> {
+                list.add(em.merge(e));
+            });
+
+            return list;
+        };
+
+        return transactionStart(fun);
     }
 
     public void remove(T entity) {
