@@ -21,5 +21,5 @@ public class Member {
     private String password;
     private String name;
     @Enumerated(value = EnumType.STRING)
-    RoleType roleType;
+    private RoleType roleType;
 }

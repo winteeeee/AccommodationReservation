@@ -13,7 +13,7 @@ public class MainBoundary extends Boundary {
     private MemberControl memberControl;
 
     public MainBoundary(AccommodationReservationApp app) {
-        super(app);
+        super(app, null);
         memberControl = new MemberControl();
     }
 
@@ -63,6 +63,5 @@ public class MainBoundary extends Boundary {
         } else {
             ErrorMessages.invalidCommandError();
         }
-
     }
 }

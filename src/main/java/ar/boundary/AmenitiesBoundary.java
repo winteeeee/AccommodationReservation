@@ -10,8 +10,7 @@ import ar.util.Keyboard;
 
 import java.util.Scanner;
 
-public class AmenitiesBoundary extends Boundary implements Returnable {
-    private Boundary parent;
+public class AmenitiesBoundary extends Boundary {
     private Accommodation accommodation;
     private Scanner sc = Keyboard.getInstance();
     private BasicAmenitiesControl basicAmenitiesControl;
@@ -20,7 +19,7 @@ public class AmenitiesBoundary extends Boundary implements Returnable {
     private AccessibilityAmenitiesControl accessibilityAmenitiesControl;
 
     public AmenitiesBoundary(AccommodationReservationApp app, Boundary parent, Accommodation accommodation) {
-        super(app);
+        super(app, parent);
         this.parent = parent;
         this.accommodation = accommodation;
         basicAmenitiesControl = new BasicAmenitiesControl();
@@ -212,10 +211,5 @@ public class AmenitiesBoundary extends Boundary implements Returnable {
         registAccessibilityAmenities();
         System.out.println("숙소가 성공적으로 등록되었습니다!");
         returnToParent();
-    }
-
-    @Override
-    public void returnToParent() {
-        app.setBoundary(parent);
     }
 }

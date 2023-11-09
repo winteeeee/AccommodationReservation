@@ -29,6 +29,4 @@ public class Accommodation {
     private String introduction;
     private BigDecimal weekdayFare;
     private BigDecimal weekendFare;
-    @Embedded
-    private TimeInfo timeInfo;
 }

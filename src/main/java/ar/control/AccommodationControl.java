@@ -1,11 +1,14 @@
 package ar.control;
 
-import ar.entity.Accommodation;
-import ar.entity.Member;
-import ar.entity.SpaceType;
-import ar.entity.TimeInfo;
+import ar.entity.*;
+import com.querydsl.core.types.dsl.BooleanExpression;
 
 import javax.persistence.TypedQuery;
+import java.math.BigDecimal;
+import java.time.DayOfWeek;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AccommodationControl extends Control<Accommodation, Long> {
@@ -19,9 +22,58 @@ public class AccommodationControl extends Control<Accommodation, Long> {
         return transactionStart(fun);
     }
 
-    public List<Accommodation> findByCondition(TimeInfo timeInfo, Integer person, SpaceType spaceType) {
-        //TODO QueryDSL, booleanexpression, ORDER BY 사용하여 구현
-        //TODO 정렬 기준도 인수로 받아오게끔 구현
-        return null;
+    private BooleanExpression personCheck(Integer person) {
+        if (person == null) {
+            return null;
+        }
+
+        return QAccommodation.accommodation.accommodatedPerson.goe(person);
+    }
+
+    private BooleanExpression spaceTypeCheck(SpaceType spaceType) {
+        if (spaceType == null) {
+            return null;
+        }
+
+        return QAccommodation.accommodation.spaceType.eq(spaceType);
+    }
+
+    public List<AccommodationDTO> findByCondition(DateInfo dateInfo, Integer person, SpaceType spaceType) {
+        QAccommodation qAccommodation = QAccommodation.accommodation;
+        QReview qReview = QReview.review1;
+
+        ReturnTransaction<List<AccommodationDTO>> fun = () -> {
+            List<AccommodationDTO> dtoList = new ArrayList<>();
+            List<Review> reviewList = query.selectFrom() //TODO 평균 별점 구하기 위한 리뷰 리스트
+            List<Accommodation> list = query.selectFrom(qAccommodation)
+                    .where(personCheck(person), spaceTypeCheck(spaceType))
+                    .orderBy().fetch();
+            //TODO orderBy 구현
+
+            list.forEach((e) -> {
+                long gap = ChronoUnit.DAYS.between(dateInfo.getStartDate(), dateInfo.getEndDate());
+                BigDecimal price = BigDecimal.ZERO;
+                for (long i = 0; i < gap; i++) {
+                    LocalDateTime day = dateInfo.getStartDate().plusDays(i);
+                    DayOfWeek week = day.getDayOfWeek();
+
+                    if (week != DayOfWeek.SATURDAY && week != DayOfWeek.SUNDAY) {
+                        price = price.add(e.getWeekdayFare());
+                    } else {
+                        price = price.add(e.getWeekendFare());
+                    }
+                }
+
+                AccommodationDTO cur = AccommodationDTO.builder()
+                        .name(e.getName())
+                        .spaceType(e.getSpaceType())
+                        .price(price)
+                        .averageStar(0).build();
+                dtoList.add(cur);
+            });
+
+            return dtoList;
+        };
+        return transactionStart(fun);
     }
 }

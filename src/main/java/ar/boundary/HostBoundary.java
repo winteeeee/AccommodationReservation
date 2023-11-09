@@ -9,13 +9,12 @@ import ar.util.Keyboard;
 import java.util.List;
 import java.util.Scanner;
 
-public class HostBoundary extends Boundary implements Returnable {
-    private Boundary parent;
+public class HostBoundary extends Boundary {
     private Member host;
     private AccommodationControl accommodationControl;
 
     public HostBoundary(AccommodationReservationApp app, Boundary parent, Member host) {
-        super(app);
+        super(app, parent);
         this.parent = parent;
         this.host = host;
         accommodationControl = new AccommodationControl();
@@ -64,10 +63,5 @@ public class HostBoundary extends Boundary implements Returnable {
         } else {
             ErrorMessages.invalidCommandError();
         }
-    }
-
-    @Override
-    public void returnToParent() {
-        app.setBoundary(parent);
     }
 }

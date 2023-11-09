@@ -1,5 +1,7 @@
 package ar.control;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
+
 import javax.persistence.*;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 public abstract class Control<T, K> {
     protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ar");
     protected static EntityManager em;
+    protected static JPAQueryFactory query;
 
     protected void transactionStart(VoidTransaction fun) {
         em = emf.createEntityManager();
@@ -24,10 +27,11 @@ public abstract class Control<T, K> {
         }
     }
 
-    protected List<T> transactionStart(ReturnTransaction<List<T>> fun) {
+    protected <R> R transactionStart(ReturnTransaction<R> fun) {
         em = emf.createEntityManager();
+        query = new JPAQueryFactory(em);
         EntityTransaction tx = em.getTransaction();
-        List<T> result = null;
+        R result = null;
 
         try {
             tx.begin();
@@ -43,13 +47,8 @@ public abstract class Control<T, K> {
     }
 
     public T save(T entity) {
-        ReturnTransaction<List<T>> fun = () -> {
-            List<T> list = new ArrayList<>();
-            list.add(em.merge(entity));
-            return list;
-        };
-
-        return transactionStart(fun).get(0);
+        ReturnTransaction<T> fun = () -> em.merge(entity);
+        return transactionStart(fun);
     }
 
     public List<T> save(List<T> entities) {
@@ -86,12 +85,7 @@ public abstract class Control<T, K> {
         return transactionStart(fun);
     }
     public T findById(Class<T> c, K id) {
-        ReturnTransaction<List<T>> fun = () -> {
-            List<T> result = new ArrayList<>();
-            result.add(em.find(c, id));
-            return result;
-        };
-
-        return transactionStart(fun).get(0);
+        ReturnTransaction<T> fun = () -> em.find(c, id);
+        return transactionStart(fun);
     }
 }

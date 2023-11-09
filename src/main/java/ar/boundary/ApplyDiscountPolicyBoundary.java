@@ -10,14 +10,13 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ApplyDiscountPolicyBoundary extends Boundary implements Returnable {
-    private Boundary parent;
+public class ApplyDiscountPolicyBoundary extends Boundary {
     private Accommodation accommodation;
     private DiscountPolicyControl discountPolicyControl;
 
 
     public ApplyDiscountPolicyBoundary(AccommodationReservationApp app, Boundary parent, Accommodation accommodation) {
-        super(app);
+        super(app, parent);
         this.parent = parent;
         this.accommodation = accommodation;
         discountPolicyControl = new DiscountPolicyControl();
@@ -92,10 +91,5 @@ public class ApplyDiscountPolicyBoundary extends Boundary implements Returnable 
 
         calPrice();
         returnToParent();
-    }
-
-    @Override
-    public void returnToParent() {
-        app.setBoundary(parent);
     }
 }

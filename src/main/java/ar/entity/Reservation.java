@@ -18,7 +18,7 @@ public class Reservation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @ManyToOne
-    private Guest guest;
+    private Member guest;
     @ManyToOne
     private Accommodation accommodation;
     @Embedded

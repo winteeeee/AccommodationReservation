@@ -6,19 +6,16 @@ import ar.entity.*;
 import ar.util.Keyboard;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Scanner;
 
-public class RegistHouseBoundary extends Boundary implements Returnable {
+public class RegistHouseBoundary extends Boundary {
     private Boundary parent;
     private Member host;
     private Scanner sc = Keyboard.getInstance();
     private AccommodationControl accommodationControl;
 
     public RegistHouseBoundary(AccommodationReservationApp app, Boundary parent, Member host) {
-        super(app);
+        super(app, parent);
         this.parent = parent;
         this.host = host;
         accommodationControl = new AccommodationControl();
@@ -50,7 +47,6 @@ public class RegistHouseBoundary extends Boundary implements Returnable {
         BigDecimal weekdayFare = sc.nextBigDecimal();
         System.out.print("주말 요금 입력 : ");
         BigDecimal weekendFare = sc.nextBigDecimal();
-        TimeInfo timeInfo = new TimeInfo(LocalTime.of(15, 0), LocalTime.of(11, 0));
 
         Accommodation house = Accommodation.builder()
                 .spaceType(SpaceType.values()[spaceType])
@@ -64,14 +60,8 @@ public class RegistHouseBoundary extends Boundary implements Returnable {
                 .bathroom(bathroom)
                 .introduction(introduction)
                 .weekdayFare(weekdayFare)
-                .weekendFare(weekendFare)
-                .timeInfo(timeInfo).build();
+                .weekendFare(weekendFare).build();
         house = accommodationControl.save(house);
         app.setBoundary(new AmenitiesBoundary(app, parent, house));
-    }
-
-    @Override
-    public void returnToParent() {
-        app.setBoundary(parent);
     }
 }

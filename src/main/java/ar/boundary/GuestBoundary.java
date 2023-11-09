@@ -1,16 +1,14 @@
 package ar.boundary;
 
 import ar.AccommodationReservationApp;
-import ar.entity.Accommodation;
 import ar.entity.Member;
 import ar.util.ErrorMessages;
 
-public class GuestBoundary extends Boundary implements Returnable {
-    private Boundary parent;
+public class GuestBoundary extends Boundary{
     private Member guest;
 
     public GuestBoundary(AccommodationReservationApp app, Boundary parent, Member guest) {
-        super(app);
+        super(app, parent);
         this.parent = parent;
         this.guest = guest;
     }
@@ -39,10 +37,5 @@ public class GuestBoundary extends Boundary implements Returnable {
         } else {
             ErrorMessages.invalidCommandError();
         }
-    }
-
-    @Override
-    public void returnToParent() {
-        app.setBoundary(parent);
     }
 }
