@@ -11,42 +11,18 @@ import java.util.Scanner;
 
 public class HostBoundary extends Boundary implements Returnable {
     private Boundary parent;
-    private Host host;
-    private Scanner sc = Keyboard.getInstance();
-    private HostControl hostControl;
+    private Member host;
     private AccommodationControl accommodationControl;
 
-    public HostBoundary(AccommodationReservationApp app, Boundary parent) {
+    public HostBoundary(AccommodationReservationApp app, Boundary parent, Member host) {
         super(app);
         this.parent = parent;
-        host = null;
-        hostControl = new HostControl();
+        this.host = host;
         accommodationControl = new AccommodationControl();
     }
 
-    private Host login() {
-        Host result = null;
-
-        while (result == null) {
-            System.out.println("==============================");
-            System.out.println("호스트로 로그인합니다.");
-            System.out.println("==============================");
-            System.out.print("아이디 입력 : ");
-            String id = sc.next();
-            System.out.print("비밀번호 입력 : ");
-            String password = sc.next();
-
-            result = hostControl.login(id, password);
-            if (result == null) {
-                ErrorMessages.loginFailed();
-            }
-        }
-
-        return result;
-    }
-
     private Accommodation findAccommodation() {
-        List<Accommodation> list = accommodationControl.findByHost(host);
+        List<Accommodation> list = accommodationControl.findByMember(host);
         System.out.println("[숙소 선택]");
 
         for (int i = 1; i <= list.size(); i++) {
@@ -64,10 +40,6 @@ public class HostBoundary extends Boundary implements Returnable {
         final int SET_DISCOUNT_POLICY = 2;
         final int SHOW_REVENUE = 3;
         final int LOGOUT = 4;
-
-        if (host == null) {
-            host = login();
-        }
 
         System.out.println("==============================");
         System.out.println(host.getName() + " 호스트님 환영합니다.");

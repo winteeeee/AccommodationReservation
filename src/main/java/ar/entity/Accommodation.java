@@ -20,7 +20,7 @@ public class Accommodation {
     private String name;
     private String address;
     @ManyToOne
-    private Host host;
+    private Member host;
     private Integer accommodatedPerson;
     private Integer room;
     private Integer bedroom;
@@ -29,4 +29,6 @@ public class Accommodation {
     private String introduction;
     private BigDecimal weekdayFare;
     private BigDecimal weekendFare;
+    @Embedded
+    private TimeInfo timeInfo;
 }

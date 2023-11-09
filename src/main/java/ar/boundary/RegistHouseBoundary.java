@@ -2,21 +2,22 @@ package ar.boundary;
 
 import ar.AccommodationReservationApp;
 import ar.control.AccommodationControl;
-import ar.entity.Accommodation;
-import ar.entity.Host;
-import ar.entity.SpaceType;
+import ar.entity.*;
 import ar.util.Keyboard;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class RegistHouseBoundary extends Boundary implements Returnable {
     private Boundary parent;
-    private Host host;
+    private Member host;
     private Scanner sc = Keyboard.getInstance();
     private AccommodationControl accommodationControl;
 
-    public RegistHouseBoundary(AccommodationReservationApp app, Boundary parent, Host host) {
+    public RegistHouseBoundary(AccommodationReservationApp app, Boundary parent, Member host) {
         super(app);
         this.parent = parent;
         this.host = host;
@@ -49,6 +50,7 @@ public class RegistHouseBoundary extends Boundary implements Returnable {
         BigDecimal weekdayFare = sc.nextBigDecimal();
         System.out.print("주말 요금 입력 : ");
         BigDecimal weekendFare = sc.nextBigDecimal();
+        TimeInfo timeInfo = new TimeInfo(LocalTime.of(15, 0), LocalTime.of(11, 0));
 
         Accommodation house = Accommodation.builder()
                 .spaceType(SpaceType.values()[spaceType])
@@ -62,7 +64,8 @@ public class RegistHouseBoundary extends Boundary implements Returnable {
                 .bathroom(bathroom)
                 .introduction(introduction)
                 .weekdayFare(weekdayFare)
-                .weekendFare(weekendFare).build();
+                .weekendFare(weekendFare)
+                .timeInfo(timeInfo).build();
         house = accommodationControl.save(house);
         app.setBoundary(new AmenitiesBoundary(app, parent, house));
     }
