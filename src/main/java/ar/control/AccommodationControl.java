@@ -1,6 +1,7 @@
 package ar.control;
 
 import ar.entity.*;
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
 import javax.persistence.TypedQuery;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class AccommodationControl extends Control<Accommodation, Long> {
     public List<Accommodation> findByMember(Member host) {
@@ -43,12 +45,16 @@ public class AccommodationControl extends Control<Accommodation, Long> {
         QReview qReview = QReview.review1;
 
         ReturnTransaction<List<AccommodationDTO>> fun = () -> {
-            List<AccommodationDTO> dtoList = new ArrayList<>();
-            List<Review> reviewList = query.selectFrom() //TODO 평균 별점 구하기 위한 리뷰 리스트
-            List<Accommodation> list = query.selectFrom(qAccommodation)
-                    .where(personCheck(person), spaceTypeCheck(spaceType))
-                    .orderBy().fetch();
-            //TODO orderBy 구현
+            List<AccommodationDTO> list = query.select(Projections.constructor(AccommodationDTO.class,
+                    qAccommodation.name,
+                    qAccommodation.spaceType,
+                    qAccommodation.weekdayFare,
+                    qAccommodation.weekendFare,
+                    qReview.star.avg()))
+                            .from(qAccommodation, qReview)
+                            .where(qAccommodation.id.eq(qReview.reservation.accommodation.id).and(personCheck(person)).and(spaceTypeCheck(spaceType)))
+                            .orderBy(qAccommodation.weekdayFare.asc(), qAccommodation.weekendFare.asc(), qReview.star.avg().asc())
+                            .fetch();
 
             list.forEach((e) -> {
                 long gap = ChronoUnit.DAYS.between(dateInfo.getStartDate(), dateInfo.getEndDate());
@@ -68,7 +74,7 @@ public class AccommodationControl extends Control<Accommodation, Long> {
                         .name(e.getName())
                         .spaceType(e.getSpaceType())
                         .price(price)
-                        .averageStar(0).build();
+                        .averageStar(avgStar).build();
                 dtoList.add(cur);
             });
 
