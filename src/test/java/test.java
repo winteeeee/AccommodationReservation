@@ -1,12 +1,10 @@
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Scanner;
+import java.util.*;
 
 public class test {
     public static void main(String[] args) {
-        String input = "2023-11-08 00:00:00";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime date = LocalDateTime.parse(input, formatter);
-        System.out.println(date);
+        System.out.println(LocalDateTime.of(2023, 11, 1, 0, 0));
     }
 }

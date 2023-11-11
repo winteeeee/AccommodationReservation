@@ -20,7 +20,7 @@ public class Accommodation {
     private SpaceType spaceType;
     private String name;
     private String address;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Member host;
     private Integer accommodatedPerson;
     private Integer room;
@@ -31,5 +31,5 @@ public class Accommodation {
     private BigDecimal weekdayFare;
     private BigDecimal weekendFare;
     @OneToMany(mappedBy = "accommodation")
-    List<Reservation> reservations;
+    private List<Reservation> reservations;
 }

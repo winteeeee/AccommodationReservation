@@ -1,7 +1,6 @@
 package ar.control;
 
 import ar.entity.*;
-import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
@@ -61,6 +60,7 @@ public class AccommodationControl extends Control<Accommodation, Long> {
 
 
             return query.select(Projections.constructor(AccommodationDTO.class,
+                    qAccommodation.id,
                     qAccommodation.name,
                     qAccommodation.spaceType,
                     qAccommodation.weekdayFare.multiply(BigDecimal.valueOf(weekdayCount)).add(qAccommodation.weekendFare.multiply(BigDecimal.valueOf(weekendCount))),

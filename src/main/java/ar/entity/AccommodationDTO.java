@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Builder
 public class AccommodationDTO {
+    private Long id;
     private String name;
     private SpaceType spaceType;
     private BigDecimal price;
