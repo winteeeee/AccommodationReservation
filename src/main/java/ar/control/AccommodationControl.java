@@ -1,6 +1,7 @@
 package ar.control;
 
 import ar.entity.*;
+import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 
@@ -9,9 +10,7 @@ import java.math.BigDecimal;
 import java.time.DayOfWeek;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class AccommodationControl extends Control<Accommodation, Long> {
     public List<Accommodation> findByMember(Member host) {
@@ -42,43 +41,38 @@ public class AccommodationControl extends Control<Accommodation, Long> {
 
     public List<AccommodationDTO> findByCondition(DateInfo dateInfo, Integer person, SpaceType spaceType) {
         QAccommodation qAccommodation = QAccommodation.accommodation;
+        QReservation qReservation = QReservation.reservation;
         QReview qReview = QReview.review1;
 
         ReturnTransaction<List<AccommodationDTO>> fun = () -> {
-            List<AccommodationDTO> list = query.select(Projections.constructor(AccommodationDTO.class,
+            long gap = ChronoUnit.DAYS.between(dateInfo.getStartDate(), dateInfo.getEndDate());
+            int weekdayCount = 0;
+            int weekendCount = 0;
+            for (long i = 0; i < gap; i++) {
+                LocalDateTime day = dateInfo.getStartDate().plusDays(i);
+                DayOfWeek week = day.getDayOfWeek();
+
+                if (week != DayOfWeek.SATURDAY && week != DayOfWeek.SUNDAY) {
+                    weekdayCount++;
+                } else {
+                    weekendCount++;
+                }
+            }
+
+
+            return query.select(Projections.constructor(AccommodationDTO.class,
                     qAccommodation.name,
                     qAccommodation.spaceType,
-                    qAccommodation.weekdayFare,
-                    qAccommodation.weekendFare,
+                    qAccommodation.weekdayFare.multiply(BigDecimal.valueOf(weekdayCount)).add(qAccommodation.weekendFare.multiply(BigDecimal.valueOf(weekendCount))),
                     qReview.star.avg()))
-                            .from(qAccommodation, qReview)
-                            .where(qAccommodation.id.eq(qReview.reservation.accommodation.id).and(personCheck(person)).and(spaceTypeCheck(spaceType)))
-                            .orderBy(qAccommodation.weekdayFare.asc(), qAccommodation.weekendFare.asc(), qReview.star.avg().asc())
+                            .from(qAccommodation)
+                            .leftJoin(qAccommodation.reservations, qReservation)
+                            .leftJoin(qReservation.review, qReview)
+                            .where(personCheck(person), spaceTypeCheck(spaceType))
+                            .groupBy(qAccommodation.name)
+                            .orderBy(qAccommodation.weekdayFare.multiply(BigDecimal.valueOf(weekdayCount)).add(qAccommodation.weekendFare.multiply(BigDecimal.valueOf(weekendCount))).asc(), qReview.star.avg().asc())
                             .fetch();
-
-            list.forEach((e) -> {
-                long gap = ChronoUnit.DAYS.between(dateInfo.getStartDate(), dateInfo.getEndDate());
-                BigDecimal price = BigDecimal.ZERO;
-                for (long i = 0; i < gap; i++) {
-                    LocalDateTime day = dateInfo.getStartDate().plusDays(i);
-                    DayOfWeek week = day.getDayOfWeek();
-
-                    if (week != DayOfWeek.SATURDAY && week != DayOfWeek.SUNDAY) {
-                        price = price.add(e.getWeekdayFare());
-                    } else {
-                        price = price.add(e.getWeekendFare());
-                    }
-                }
-
-                AccommodationDTO cur = AccommodationDTO.builder()
-                        .name(e.getName())
-                        .spaceType(e.getSpaceType())
-                        .price(price)
-                        .averageStar(avgStar).build();
-                dtoList.add(cur);
-            });
-
-            return dtoList;
+            //TODO N + 1 문제 체크
         };
         return transactionStart(fun);
     }

@@ -30,4 +30,6 @@ public class Accommodation {
     private String introduction;
     private BigDecimal weekdayFare;
     private BigDecimal weekendFare;
+    @OneToMany(mappedBy = "accommodation")
+    List<Reservation> reservations;
 }

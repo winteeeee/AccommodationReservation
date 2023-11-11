@@ -45,10 +45,12 @@ public class FindHouseBoundary extends Boundary{
         SpaceType spaceType = spaceTypeIdx != 0 && spaceTypeIdx != 1 ? null : SpaceType.values()[spaceTypeIdx];
 
         List<AccommodationDTO> list = accommodationControl.findByCondition(dateInfo, person, spaceType);
-        System.out.println("숙소 유형\t이름\t총 가격\t평균 별점");
-        list.forEach((e) -> {
-            System.out.println(e.getSpaceType().name() + "\t" + e.getName() + "\t" + e.getPrice() + "\t" + e.getAverageStar());
-        });
+        System.out.println("숙소 유형\t\t이름\t\t\t총 가격\t\t평균 별점");
+        if (list != null) {
+            list.forEach((e) -> {
+                System.out.println(e.getSpaceType().name() + "\t" + e.getName() + "\t" + e.getPrice() + "\t" + e.getAverageStar());
+            });
+        }
 
         return list;
     }
@@ -56,6 +58,10 @@ public class FindHouseBoundary extends Boundary{
     @Override
     public void run() {
         List<AccommodationDTO> list = findHouse();
+        if (list == null) {
+            returnToParent();
+            return;
+        }
 
         final int HOUSE_DETAIL = 1;
         final int HOUSE_RESERVE = 2;

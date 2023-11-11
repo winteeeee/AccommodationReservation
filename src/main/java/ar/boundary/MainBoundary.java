@@ -22,7 +22,7 @@ public class MainBoundary extends Boundary {
 
         while (result == null) {
             System.out.println("==============================");
-            System.out.println("호스트로 로그인합니다.");
+            System.out.println("로그인합니다.");
             System.out.println("==============================");
             System.out.print("아이디 입력 : ");
             String id = sc.next();

@@ -12,7 +12,6 @@ import java.math.BigDecimal;
 public class AccommodationDTO {
     private String name;
     private SpaceType spaceType;
-    private BigDecimal weekdayFare;
-    private BigDecimal weekendFare;
+    private BigDecimal price;
     private Double averageStar;
 }
