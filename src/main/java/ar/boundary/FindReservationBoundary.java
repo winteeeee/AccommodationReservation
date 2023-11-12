@@ -61,6 +61,7 @@ public class FindReservationBoundary extends Boundary {
             }
 
             showReservationList(list);
+            app.setBoundary(new ReservationBoundary(app, this, list));
         } else if (command == RETURN) {
             returnToParent();
         } else {

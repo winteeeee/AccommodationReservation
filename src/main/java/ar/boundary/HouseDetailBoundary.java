@@ -30,7 +30,6 @@ public class HouseDetailBoundary extends Boundary {
     }
 
     private void showReservationStatus(int month) {
-        //TODO 제대로 나오나 검증
         List<String> dayElement = new ArrayList<>();
         List<Integer> roomCount = reservationControl.findSumOfRoomByAccommodationAndYearAndMonth(accommodation, LocalDate.now().getYear(), month);
         roomCount.forEach((e) -> {

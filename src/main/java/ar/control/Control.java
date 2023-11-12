@@ -66,13 +66,13 @@ public abstract class Control<T, K> {
 
     public void remove(T entity) {
         transactionStart(() -> {
-            em.remove(entity);
+            em.remove(em.merge(entity));
         });
     }
 
     public void remove(List<T> entities) {
         transactionStart(() -> {
-            entities.forEach((e) -> em.remove(e));
+            entities.forEach((e) -> em.remove(em.merge(e)));
         });
     }
 

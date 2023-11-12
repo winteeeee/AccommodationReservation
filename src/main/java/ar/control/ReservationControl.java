@@ -16,8 +16,8 @@ public class ReservationControl extends Control<Reservation, Long> {
         return QAccommodation.accommodation.id.eq(id);
     }
 
-    public BooleanExpression monthBetween(int year, int month) {
-        LocalDateTime startDay = LocalDateTime.of(year, month, 1, 0, 0);
+    public BooleanExpression betweenCheck(int year, int month, int day) {
+        LocalDateTime startDay = LocalDateTime.of(year, month, day, 0, 0);
         LocalDateTime endDay = startDay.plusDays(1).minusSeconds(1);
 
         return QReservation.reservation.dateInfo.startDate.between(startDay, endDay)
@@ -35,7 +35,7 @@ public class ReservationControl extends Control<Reservation, Long> {
             for (int day = 1; day <= limitDay; day++) {
                 Integer cur = query.select(qReservation.room.sum())
                                     .from(qReservation)
-                                    .where(joinCheck(accommodation.getId()).and(monthBetween(year, month)))
+                                    .where(joinCheck(accommodation.getId()).and(betweenCheck(year, month, day)))
                                     .fetchOne();
                 list.add(cur);
             }

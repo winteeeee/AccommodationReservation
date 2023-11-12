@@ -29,4 +29,8 @@ public class ErrorMessages {
     public static void invalidDateFormat() {
         System.out.println("[오류] 날짜는 (yyyy-MM-dd) 꼴로 입력되어야 합니다.");
     }
+
+    public static void completedReservationError() {
+        System.out.println("[오류] 체크아웃이 완료된 예약은 취소할 수 없습니다.");
+    }
 }

@@ -14,10 +14,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class FindHouseBoundary extends Boundary{
+    private List<AccommodationDTO> list;
     private AccommodationControl accommodationControl;
 
     public FindHouseBoundary(AccommodationReservationApp app, Boundary parent) {
         super(app, parent);
+        list = null;
         this.parent = parent;
         accommodationControl = new AccommodationControl();
     }
@@ -65,7 +67,7 @@ public class FindHouseBoundary extends Boundary{
         DateInfo dateInfo = getCheckInOutInfo();
         Integer person = getPerson();
         SpaceType spaceType = getSpaceType();
-        List<AccommodationDTO> list = accommodationControl.findByCondition(dateInfo, person, spaceType);
+        list = accommodationControl.findByCondition(dateInfo, person, spaceType);
         if (list == null) {
             ErrorMessages.canNotFindHouse();
             returnToParent();

@@ -33,6 +33,7 @@ public class GuestBoundary extends Boundary{
         } else if (command == FIND_RESERVATION) {
             app.setBoundary(new FindReservationBoundary(app, this));
         } else if (command == LOGOUT) {
+            app.setSignedMember(null);
             returnToParent();
         } else {
             ErrorMessages.invalidCommandError();

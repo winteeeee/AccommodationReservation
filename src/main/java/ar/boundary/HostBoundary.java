@@ -59,6 +59,7 @@ public class HostBoundary extends Boundary {
             Accommodation accommodation = findAccommodation();
             // TODO 구현
         } else if (command == LOGOUT) {
+            app.setSignedMember(null);
             returnToParent();
         } else {
             ErrorMessages.invalidCommandError();
