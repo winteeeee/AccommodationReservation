@@ -1,18 +1,15 @@
 package ar.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,5 +18,4 @@ public class Review {
     private Reservation reservation;
     private Byte star;
     private String review;
-    private LocalDateTime createdDate;
 }

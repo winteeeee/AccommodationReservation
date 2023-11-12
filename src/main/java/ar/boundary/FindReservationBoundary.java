@@ -34,8 +34,6 @@ public class FindReservationBoundary extends Boundary {
 
     @Override
     public void run() {
-        sc.nextLine();
-
         final int FIND_ALL = 1;
         final int FIND_CHECKOUT_COMPLETE = 2;
         final int FIND_CHECKIN_SCHEDULED = 3;

@@ -53,6 +53,7 @@ public class ReservationControl extends Control<Reservation, Long> {
     public List<Reservation> findByMember(Member guest) {
         ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
                                                                 .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
+                                                                .leftJoin(qReservation.review, QReview.review1).fetchJoin()
                                                                 .where(memberIdMatching(guest))
                                                                 .orderBy(qReservation.dateInfo.startDate.asc())
                                                                 .fetch();
@@ -64,6 +65,7 @@ public class ReservationControl extends Control<Reservation, Long> {
         LocalDateTime now = LocalDateTime.now();
         ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
                                                                 .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
+                                                                .leftJoin(qReservation.review, QReview.review1).fetchJoin()
                                                                 .where(memberIdMatching(guest).and(qReservation.dateInfo.endDate.before(now)))
                                                                 .orderBy(qReservation.dateInfo.startDate.asc())
                                                                 .fetch();
@@ -75,6 +77,7 @@ public class ReservationControl extends Control<Reservation, Long> {
         LocalDateTime now = LocalDateTime.now();
         ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
                                                                 .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
+                                                                .leftJoin(qReservation.review, QReview.review1).fetchJoin()
                                                                 .where(memberIdMatching(guest).and(qReservation.dateInfo.startDate.after(now)))
                                                                 .orderBy(qReservation.dateInfo.startDate.asc())
                                                                 .fetch();

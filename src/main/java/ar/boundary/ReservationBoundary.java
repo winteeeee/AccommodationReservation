@@ -4,7 +4,6 @@ import ar.AccommodationReservationApp;
 import ar.entity.Reservation;
 import ar.util.ErrorMessages;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class ReservationBoundary extends Boundary {
@@ -34,14 +33,11 @@ public class ReservationBoundary extends Boundary {
             System.out.print("예약 선택 : ");
             int idx = sc.nextInt();
             Reservation reservation = reservations.get(idx);
-            if (reservation.getDateInfo().getEndDate().isBefore(LocalDateTime.now())) {
-                ErrorMessages.completedReservationError();
-            } else {
-                if (command == CANCEL_RESERVATION) {
-                    app.setBoundary(new CancelReservationBoundary(app, parent, reservation));
-                } else if (command == REGIST_REVIEW) {
-                    //TODO 구현
-                }
+
+            if (command == CANCEL_RESERVATION) {
+                app.setBoundary(new CancelReservationBoundary(app, parent, reservation));
+            } else if (command == REGIST_REVIEW) {
+                app.setBoundary(new RegistReviewBoundary(app, parent, reservation));
             }
         } else if (command == RETURN) {
             returnToParent();
