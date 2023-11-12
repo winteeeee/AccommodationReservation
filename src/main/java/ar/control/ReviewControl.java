@@ -9,9 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewControl extends Control<Review, Long> {
+    private QReview qReview = QReview.review1;
     public List<Review> findByReservations(List<Reservation> reservations) {
         QReservation qReservation = QReservation.reservation;
-        QReview qReview = QReview.review1;
 
         ReturnTransaction<List<Review>> fun = () -> {
             List<Review> reviews = new ArrayList<>();

@@ -32,16 +32,16 @@ public class FindHouseBoundary extends Boundary{
         return new DateInfo(checkIn, checkOut);
     }
 
-    private List<AccommodationDTO> findHouse(DateInfo dateInfo) {
+    private Integer getPerson() {
         System.out.print("인원 입력(null은 0 입력) : ");
         Integer person = sc.nextInt();
-        person = person == 0 ? null : person;
+        return person = person == 0 ? null : person;
+    }
 
+    private SpaceType getSpaceType() {
         System.out.print("숙소 유형 입력(0 - 공간 전체, 1 - 개인실, 이외 - null) : ");
         int spaceTypeIdx = sc.nextInt();
-        SpaceType spaceType = spaceTypeIdx != 0 && spaceTypeIdx != 1 ? null : SpaceType.values()[spaceTypeIdx];
-
-        return accommodationControl.findByCondition(dateInfo, person, spaceType);
+        return spaceTypeIdx != 0 && spaceTypeIdx != 1 ? null : SpaceType.values()[spaceTypeIdx];
     }
 
     private void showHouseList(List<AccommodationDTO> list) {
@@ -63,7 +63,9 @@ public class FindHouseBoundary extends Boundary{
         System.out.println("==============================");
 
         DateInfo dateInfo = getCheckInOutInfo();
-        List<AccommodationDTO> list = findHouse(dateInfo);
+        Integer person = getPerson();
+        SpaceType spaceType = getSpaceType();
+        List<AccommodationDTO> list = accommodationControl.findByCondition(dateInfo, person, spaceType);
         if (list == null) {
             ErrorMessages.canNotFindHouse();
             returnToParent();
@@ -96,7 +98,7 @@ public class FindHouseBoundary extends Boundary{
                 if (command == HOUSE_DETAIL) {
                     app.setBoundary(new HouseDetailBoundary(app, parent, accommodation));
                 } else if (command == HOUSE_RESERVE) {
-                    app.setBoundary(new HouseReserveBoundary(app, parent, accommodation, accommodationDTO, dateInfo));
+                    app.setBoundary(new HouseReserveBoundary(app, parent, accommodation, accommodationDTO, dateInfo, person));
                 }
             } else if (command == RETURN) {
                 returnToParent();

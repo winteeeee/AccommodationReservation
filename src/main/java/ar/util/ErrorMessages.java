@@ -25,4 +25,8 @@ public class ErrorMessages {
         //TODO 사용
         System.out.println("[오류] 끝 날짜는 시작 날짜보다 빠를 수 없습니다.");
     }
+
+    public static void invalidDateFormat() {
+        System.out.println("[오류] 날짜는 (yyyy-MM-dd) 꼴로 입력되어야 합니다.");
+    }
 }

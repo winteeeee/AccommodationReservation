@@ -11,13 +11,15 @@ public class HouseReserveBoundary extends Boundary {
     private Accommodation accommodation;
     private AccommodationDTO accommodationDTO;
     private DateInfo checkInOutInfo;
+    private Integer person;
     private ReservationControl reservationControl;
 
-    public HouseReserveBoundary(AccommodationReservationApp app, Boundary parent, Accommodation accommodation, AccommodationDTO accommodationDTO, DateInfo dateInfo) {
+    public HouseReserveBoundary(AccommodationReservationApp app, Boundary parent, Accommodation accommodation, AccommodationDTO accommodationDTO, DateInfo dateInfo, Integer person) {
         super(app, parent);
         this.accommodation = accommodation;
         this.accommodationDTO = accommodationDTO;
         checkInOutInfo = dateInfo;
+        this.person = person;
         reservationControl = new ReservationControl();
     }
 
@@ -28,8 +30,6 @@ public class HouseReserveBoundary extends Boundary {
         System.out.println("==============================");
         System.out.println("숙소를 예약합니다.");
         System.out.println("==============================");
-        System.out.print("숙소 이용 인원 입력 : ");
-        Integer person = sc.nextInt();
 
         Integer room = 0;
         if (accommodation.getSpaceType() == SpaceType.ENTIRE_PLACE) {

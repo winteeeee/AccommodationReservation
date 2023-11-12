@@ -31,7 +31,7 @@ public class GuestBoundary extends Boundary{
         if (command == FIND_HOUSE) {
             app.setBoundary(new FindHouseBoundary(app, this));
         } else if (command == FIND_RESERVATION) {
-            //TODO 구현
+            app.setBoundary(new FindReservationBoundary(app, this));
         } else if (command == LOGOUT) {
             returnToParent();
         } else {

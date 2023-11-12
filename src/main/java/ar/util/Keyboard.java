@@ -21,9 +21,20 @@ public class Keyboard {
 
     public static LocalDateTime nextLocalDateTime() {
         String defaultTime = " 00:00:00";
+        String date;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-        String date = sc.nextLine() + defaultTime;
-        return LocalDateTime.parse(date, formatter);
+        while (true) {
+            date = sc.nextLine();
+
+            if (date.length() != 10) {
+                ErrorMessages.invalidDateFormat();
+                System.out.print("재입력 : ");
+            } else {
+                break;
+            }
+        }
+
+        return LocalDateTime.parse(date + defaultTime, formatter);
     }
 }

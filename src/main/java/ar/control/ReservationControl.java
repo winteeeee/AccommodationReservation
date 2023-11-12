@@ -10,6 +10,8 @@ import java.util.Calendar;
 import java.util.List;
 
 public class ReservationControl extends Control<Reservation, Long> {
+    private QReservation qReservation = QReservation.reservation;
+
     public BooleanExpression joinCheck(Long id) {
         return QAccommodation.accommodation.id.eq(id);
     }
@@ -40,6 +42,42 @@ public class ReservationControl extends Control<Reservation, Long> {
 
             return list;
         };
+
+        return transactionStart(fun);
+    }
+
+    public BooleanExpression memberIdMatching(Member guest) {
+        return qReservation.guest.id.eq(guest.getId());
+    }
+
+    public List<Reservation> findByMember(Member guest) {
+        ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
+                                                                .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
+                                                                .where(memberIdMatching(guest))
+                                                                .orderBy(qReservation.dateInfo.startDate.asc())
+                                                                .fetch();
+
+        return transactionStart(fun);
+    }
+
+    public List<Reservation> findTerminatedByMember(Member guest) {
+        LocalDateTime now = LocalDateTime.now();
+        ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
+                                                                .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
+                                                                .where(memberIdMatching(guest).and(qReservation.dateInfo.endDate.before(now)))
+                                                                .orderBy(qReservation.dateInfo.startDate.asc())
+                                                                .fetch();
+
+        return transactionStart(fun);
+    }
+
+    public List<Reservation> findOncomingByMember(Member guest) {
+        LocalDateTime now = LocalDateTime.now();
+        ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
+                                                                .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
+                                                                .where(memberIdMatching(guest).and(qReservation.dateInfo.startDate.after(now)))
+                                                                .orderBy(qReservation.dateInfo.startDate.asc())
+                                                                .fetch();
 
         return transactionStart(fun);
     }

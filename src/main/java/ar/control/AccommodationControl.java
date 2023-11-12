@@ -12,6 +12,7 @@ import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class AccommodationControl extends Control<Accommodation, Long> {
+    private QAccommodation qAccommodation = QAccommodation.accommodation;
     public List<Accommodation> findByMember(Member host) {
         ReturnTransaction<List<Accommodation>> fun = () -> {
             TypedQuery<Accommodation> query = em.createQuery("SELECT a FROM Accommodation a WHERE a.host.id =: hostId", Accommodation.class);
@@ -39,7 +40,6 @@ public class AccommodationControl extends Control<Accommodation, Long> {
     }
 
     public List<AccommodationDTO> findByCondition(DateInfo dateInfo, Integer person, SpaceType spaceType) {
-        QAccommodation qAccommodation = QAccommodation.accommodation;
         QReservation qReservation = QReservation.reservation;
         QReview qReview = QReview.review1;
 
