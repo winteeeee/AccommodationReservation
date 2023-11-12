@@ -1,6 +1,10 @@
 package ar.util;
 
+import ar.entity.Accommodation;
+import ar.entity.SpaceType;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -46,5 +50,32 @@ public class Printer {
         }
         System.out.println("┃");
         System.out.println("┣━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┫");
+    }
+
+    public static void showReservationStatus(Accommodation accommodation, int month, List<Integer> roomCount) {
+        List<String> dayElement = new ArrayList<>();
+        roomCount.forEach((e) -> {
+            if (accommodation.getSpaceType() == SpaceType.ENTIRE_PLACE) {
+                if (e != null) {
+                    dayElement.add("無");
+                } else {
+                    dayElement.add("有");
+                }
+            } else if (accommodation.getSpaceType() == SpaceType.PRIVATE_ROOM) {
+                if (e != null) {
+                    e = e > accommodation.getRoom() ? 0 : accommodation.getRoom() - e;
+                } else {
+                    e = accommodation.getRoom();
+                }
+
+                if (e < 10) {
+                    dayElement.add("0" + e);
+                } else {
+                    dayElement.add(String.valueOf(e));
+                }
+            }
+        });
+
+        showCalendar(month, dayElement);
     }
 }

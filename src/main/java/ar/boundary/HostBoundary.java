@@ -52,12 +52,14 @@ public class HostBoundary extends Boundary {
         int command = sc.nextInt();
         if (command == REGIST_HOUSE) {
             app.setBoundary(new RegistHouseBoundary(app, this, host));
-        } else if (command == SET_DISCOUNT_POLICY) {
+        } else if (command == SET_DISCOUNT_POLICY || command == SHOW_REVENUE) {
             Accommodation accommodation = findAccommodation();
-            app.setBoundary(new ApplyDiscountPolicyBoundary(app, this, accommodation));
-        } else if (command == SHOW_REVENUE) {
-            Accommodation accommodation = findAccommodation();
-            // TODO 구현
+
+            if (command == SET_DISCOUNT_POLICY) {
+                app.setBoundary(new ApplyDiscountPolicyBoundary(app, this, accommodation));
+            } else if (command == SHOW_REVENUE) {
+                app.setBoundary(new ShowRevenueBoundary(app, this, accommodation));
+            }
         } else if (command == LOGOUT) {
             app.setSignedMember(null);
             returnToParent();

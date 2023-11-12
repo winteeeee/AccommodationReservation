@@ -47,7 +47,7 @@ public class AccommodationControl extends Control<Accommodation, Long> {
             long gap = ChronoUnit.DAYS.between(dateInfo.getStartDate(), dateInfo.getEndDate());
             int weekdayCount = 0;
             int weekendCount = 0;
-            for (long i = 0; i < gap; i++) {
+            for (long i = 0; i <= gap; i++) {
                 LocalDateTime day = dateInfo.getStartDate().plusDays(i);
                 DayOfWeek week = day.getDayOfWeek();
 
@@ -73,6 +73,7 @@ public class AccommodationControl extends Control<Accommodation, Long> {
                             .orderBy(qAccommodation.weekdayFare.multiply(BigDecimal.valueOf(weekdayCount)).add(qAccommodation.weekendFare.multiply(BigDecimal.valueOf(weekendCount))).asc(), qReview.star.avg().asc())
                             .fetch();
             //TODO N + 1 문제 체크
+            //TODO 할인 기간 체크하여 가격 설정
         };
         return transactionStart(fun);
     }

@@ -37,11 +37,9 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
                 discountWeekendFare = accommodation.getWeekendFare().subtract(discountPolicy.getQuantitativeDiscount());
             } else {
                 discountWeekdayFare = accommodation.getWeekdayFare()
-                        .subtract(accommodation.getWeekdayFare()
-                        .multiply(discountPolicy.getFixedRateDiscount()));
+                        .subtract(accommodation.getWeekdayFare().multiply(discountPolicy.getFixedRateDiscount()));
                 discountWeekendFare = accommodation.getWeekendFare()
-                        .subtract(accommodation.getWeekendFare()
-                        .multiply(discountPolicy.getFixedRateDiscount()));
+                        .subtract(accommodation.getWeekendFare().multiply(discountPolicy.getFixedRateDiscount()));
             }
 
             System.out.println("현재 평일 가격 : " + discountWeekdayFare);

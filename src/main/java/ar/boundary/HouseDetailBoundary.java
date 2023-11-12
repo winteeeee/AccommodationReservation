@@ -29,34 +29,6 @@ public class HouseDetailBoundary extends Boundary {
         accessibilityAmenitiesControl = new AccessibilityAmenitiesControl();
     }
 
-    private void showReservationStatus(int month) {
-        List<String> dayElement = new ArrayList<>();
-        List<Integer> roomCount = reservationControl.findSumOfRoomByAccommodationAndYearAndMonth(accommodation, LocalDate.now().getYear(), month);
-        roomCount.forEach((e) -> {
-            if (accommodation.getSpaceType() == SpaceType.ENTIRE_PLACE) {
-                if (e != null) {
-                    dayElement.add("無");
-                } else {
-                    dayElement.add("有");
-                }
-            } else if (accommodation.getSpaceType() == SpaceType.PRIVATE_ROOM) {
-                if (e != null) {
-                    e = e > accommodation.getRoom() ? 0 : accommodation.getRoom() - e;
-                } else {
-                    e = accommodation.getRoom();
-                }
-
-                if (e < 10) {
-                    dayElement.add("0" + e);
-                } else {
-                    dayElement.add(String.valueOf(e));
-                }
-            }
-        });
-
-        Printer.showCalendar(month, dayElement);
-    }
-
     @Override
     public void run() {
         BasicAmenities basicAmenities = basicAmenitiesControl.findByAccommodation(accommodation);
@@ -135,7 +107,8 @@ public class HouseDetailBoundary extends Boundary {
         System.out.println("예약 현황을 확인합니다.");
         int month = LocalDate.now().getMonth().getValue();
         while (1 <= month && month <= 12) {
-            showReservationStatus(month);
+            List<Integer> roomCount = reservationControl.findSumOfRoomByAccommodationAndYearAndMonth(accommodation, LocalDate.now().getYear(), month);
+            Printer.showReservationStatus(accommodation, month, roomCount);
             System.out.print("추가 예약 현황을 볼 달 입력(1 ~ 12 이외의 값 입력 시 종료) : ");
             month = sc.nextInt();
         }
