@@ -2,6 +2,7 @@ package ar;
 
 import ar.boundary.Boundary;
 import ar.boundary.MainBoundary;
+import ar.entity.Member;
 import ar.util.Dummy;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import java.util.Scanner;
 @Getter
 @Setter
 public class AccommodationReservationApp {
+    private Member signedMember;
     private Boundary boundary;
 
     public AccommodationReservationApp() {

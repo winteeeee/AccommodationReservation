@@ -5,6 +5,7 @@ import ar.control.DiscountPolicyControl;
 import ar.entity.Accommodation;
 import ar.entity.DateInfo;
 import ar.entity.DiscountPolicy;
+import ar.util.Keyboard;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -55,9 +56,6 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
     @Override
     public void run() {
         sc.nextLine();
-        String defaultTime = " 00:00:00";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
         calPrice();
 
         DiscountPolicy discountPolicy = discountPolicyControl.findByAccommodation(accommodation);
@@ -68,16 +66,16 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
         System.out.println("할인 정책을 수정합니다.");
         System.out.println("==============================");
         System.out.print("할인 시작일 입력(yyyy-MM-dd) : ");
-        String startDate = sc.nextLine() + defaultTime;
+        LocalDateTime startDate = Keyboard.nextLocalDateTime();
         System.out.print("할인 종료일 입력(yyyy-MM-dd) : ");
-        String endDate = sc.nextLine() + defaultTime;
+        LocalDateTime endDate = Keyboard.nextLocalDateTime();
         System.out.print("할인 유형 입력(0 - 정량 할인, 1 - 정률 할인) : ");
         int isQuantitativeDiscount = sc.nextInt();
         System.out.print("할인량 입력 : ");
         BigDecimal discountFare = sc.nextBigDecimal();
 
 
-        DateInfo dateInfo = new DateInfo(LocalDateTime.parse(startDate, formatter), LocalDateTime.parse(endDate, formatter));
+        DateInfo dateInfo = new DateInfo(startDate, endDate);
         discountPolicy.setDateInfo(dateInfo);
         discountPolicy.setIsQuantitativeDiscount(isQuantitativeDiscount == 0);
         if (isQuantitativeDiscount == 0) {

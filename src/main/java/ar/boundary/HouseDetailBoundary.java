@@ -41,11 +41,16 @@ public class HouseDetailBoundary extends Boundary {
                     dayElement.add("有");
                 }
             } else if (accommodation.getSpaceType() == SpaceType.PRIVATE_ROOM) {
-                e = e > accommodation.getRoom() ? 0 : accommodation.getRoom() - e;
-                if (e < 10) {
-                    dayElement.add("0" + roomCount);
+                if (e != null) {
+                    e = e > accommodation.getRoom() ? 0 : accommodation.getRoom() - e;
                 } else {
-                    dayElement.add(String.valueOf(roomCount));
+                    e = accommodation.getRoom();
+                }
+
+                if (e < 10) {
+                    dayElement.add("0" + e);
+                } else {
+                    dayElement.add(String.valueOf(e));
                 }
             }
         });

@@ -53,6 +53,8 @@ public class MainBoundary extends Boundary {
         int command = sc.nextInt();
         if (command == LOGIN) {
             Member member = login();
+            app.setSignedMember(member);
+
             if (member.getRoleType().equals(RoleType.HOST)) {
                 app.setBoundary(new HostBoundary(app, this, member));
             } else if (member.getRoleType().equals(RoleType.GUEST)) {

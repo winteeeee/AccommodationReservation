@@ -1,5 +1,9 @@
 package ar.util;
 
+import ar.entity.DateInfo;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
 
 public class Keyboard {
@@ -13,5 +17,13 @@ public class Keyboard {
         } else {
             return sc;
         }
+    }
+
+    public static LocalDateTime nextLocalDateTime() {
+        String defaultTime = " 00:00:00";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        String date = sc.nextLine() + defaultTime;
+        return LocalDateTime.parse(date, formatter);
     }
 }

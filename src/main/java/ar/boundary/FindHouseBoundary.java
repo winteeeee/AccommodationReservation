@@ -7,6 +7,7 @@ import ar.entity.AccommodationDTO;
 import ar.entity.DateInfo;
 import ar.entity.SpaceType;
 import ar.util.ErrorMessages;
+import ar.util.Keyboard;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -21,22 +22,17 @@ public class FindHouseBoundary extends Boundary{
         accommodationControl = new AccommodationControl();
     }
 
-    private List<AccommodationDTO> findHouse() {
-        sc.nextLine();
-        String defaultTime = " 00:00:00";
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        System.out.println("==============================");
-        System.out.println("숙소를 조회합니다.");
-        System.out.println("==============================");
-
+    private DateInfo getCheckInOutInfo() {
         System.out.print("체크인 날짜 입력(yyyy-MM-dd) : ");
-        String checkIn = sc.nextLine() + defaultTime;
+        LocalDateTime checkIn = Keyboard.nextLocalDateTime();
 
         System.out.print("체크아웃 날짜 입력(yyyy-MM-dd) : ");
-        String checkOut = sc.nextLine() + defaultTime;
-        DateInfo dateInfo = new DateInfo(LocalDateTime.parse(checkIn, formatter), LocalDateTime.parse(checkOut, formatter));
+        LocalDateTime checkOut = Keyboard.nextLocalDateTime();
 
+        return new DateInfo(checkIn, checkOut);
+    }
+
+    private List<AccommodationDTO> findHouse(DateInfo dateInfo) {
         System.out.print("인원 입력(null은 0 입력) : ");
         Integer person = sc.nextInt();
         person = person == 0 ? null : person;
@@ -60,7 +56,14 @@ public class FindHouseBoundary extends Boundary{
 
     @Override
     public void run() {
-        List<AccommodationDTO> list = findHouse();
+        sc.nextLine();
+
+        System.out.println("==============================");
+        System.out.println("숙소를 조회합니다.");
+        System.out.println("==============================");
+
+        DateInfo dateInfo = getCheckInOutInfo();
+        List<AccommodationDTO> list = findHouse(dateInfo);
         if (list == null) {
             ErrorMessages.canNotFindHouse();
             returnToParent();
@@ -89,10 +92,11 @@ public class FindHouseBoundary extends Boundary{
                 }
 
                 Accommodation accommodation = accommodationControl.findById(Accommodation.class, list.get(idx).getId());
+                AccommodationDTO accommodationDTO = list.get(idx);
                 if (command == HOUSE_DETAIL) {
                     app.setBoundary(new HouseDetailBoundary(app, parent, accommodation));
                 } else if (command == HOUSE_RESERVE) {
-                    //TODO 구현
+                    app.setBoundary(new HouseReserveBoundary(app, parent, accommodation, accommodationDTO, dateInfo));
                 }
             } else if (command == RETURN) {
                 returnToParent();
