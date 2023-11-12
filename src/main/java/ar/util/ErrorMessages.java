@@ -16,11 +16,6 @@ public class ErrorMessages {
         System.out.println("[오류] 잘못된 인덱스 범위입니다.");
     }
 
-    public static void beforeDate() {
-        //TODO 사용
-        System.out.println("[오류] 현재 날짜보다 이전의 날짜를 입력할 수 없습니다.");
-    }
-
     public static void inverseEndDate() {
         //TODO 사용
         System.out.println("[오류] 끝 날짜는 시작 날짜보다 빠를 수 없습니다.");

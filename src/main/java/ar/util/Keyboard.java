@@ -1,7 +1,5 @@
 package ar.util;
 
-import ar.entity.DateInfo;
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;

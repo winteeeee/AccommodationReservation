@@ -128,8 +128,8 @@ public class Dummy {
                 .oneTowelPerGuest(true)
                 .linensForEachBed(true)
                 .onePillowPerGuest(true)
-                .cleaningSupplies(true)
-                .accommodation(dummyHouse1).build();
+                .cleaningSupplies(true).build();
+        dummyHouse1BA.setAccommodation(dummyHouse1);
         TopAmenitiesGuestsSearchFor dummyHouse1Top = TopAmenitiesGuestsSearchFor.builder()
                 .pool(true)
                 .wifi(true)
@@ -140,29 +140,28 @@ public class Dummy {
                 .airConditioningOrHeating(true)
                 .selfCheckIn(true)
                 .laptopFriendlyWorkspace(true)
-                .petsAllowed(true)
-                .accommodation(dummyHouse1).build();
+                .petsAllowed(true).build();
+        dummyHouse1Top.setAccommodation(dummyHouse1);
         SafetyAmenities dummyHouse1SA = SafetyAmenities.builder()
                 .carbonMonoxideAlarm(true)
                 .smokeAlarm(true)
                 .fireExtinguisher(true)
                 .firstAidKit(true)
-                .emergencyPlanAndLocalNumbers(true)
-                .accommodation(dummyHouse1).build();
+                .emergencyPlanAndLocalNumbers(true).build();
         AccessibilityAmenities dummyHouse1AA = AccessibilityAmenities.builder()
                 .stepFreeEntryway(true)
                 .wideEntrances(true)
                 .wideHallways(true)
-                .accessibleBathroom(true)
-                .accommodation(dummyHouse1).build();
+                .accessibleBathroom(true).build();
+        dummyHouse1AA.setAccommodation(dummyHouse1);
         BasicAmenities dummyHouse2BA = BasicAmenities.builder()
                 .toiletPaper(true)
                 .soapForHandsAndBody(true)
                 .oneTowelPerGuest(true)
                 .linensForEachBed(true)
                 .onePillowPerGuest(true)
-                .cleaningSupplies(true)
-                .accommodation(dummyHouse2).build();
+                .cleaningSupplies(true).build();
+        dummyHouse2BA.setAccommodation(dummyHouse2);
         TopAmenitiesGuestsSearchFor dummyHouse2Top = TopAmenitiesGuestsSearchFor.builder()
                 .pool(true)
                 .wifi(true)
@@ -173,29 +172,29 @@ public class Dummy {
                 .airConditioningOrHeating(true)
                 .selfCheckIn(true)
                 .laptopFriendlyWorkspace(true)
-                .petsAllowed(true)
-                .accommodation(dummyHouse2).build();
+                .petsAllowed(true).build();
+        dummyHouse2Top.setAccommodation(dummyHouse2);
         SafetyAmenities dummyHouse2SA = SafetyAmenities.builder()
                 .carbonMonoxideAlarm(true)
                 .smokeAlarm(true)
                 .fireExtinguisher(true)
                 .firstAidKit(true)
-                .emergencyPlanAndLocalNumbers(true)
-                .accommodation(dummyHouse2).build();
+                .emergencyPlanAndLocalNumbers(true).build();
+        dummyHouse2SA.setAccommodation(dummyHouse2);
         AccessibilityAmenities dummyHouse2AA = AccessibilityAmenities.builder()
                 .stepFreeEntryway(true)
                 .wideEntrances(true)
                 .wideHallways(true)
-                .accessibleBathroom(true)
-                .accommodation(dummyHouse2).build();
+                .accessibleBathroom(true).build();
+        dummyHouse2AA.setAccommodation(dummyHouse2);
         BasicAmenities dummyHouse3BA = BasicAmenities.builder()
                 .toiletPaper(true)
                 .soapForHandsAndBody(true)
                 .oneTowelPerGuest(true)
                 .linensForEachBed(true)
                 .onePillowPerGuest(true)
-                .cleaningSupplies(true)
-                .accommodation(dummyHouse3).build();
+                .cleaningSupplies(true).build();
+        dummyHouse3BA.setAccommodation(dummyHouse3);
         TopAmenitiesGuestsSearchFor dummyHouse3Top = TopAmenitiesGuestsSearchFor.builder()
                 .pool(true)
                 .wifi(true)
@@ -206,21 +205,21 @@ public class Dummy {
                 .airConditioningOrHeating(true)
                 .selfCheckIn(true)
                 .laptopFriendlyWorkspace(true)
-                .petsAllowed(true)
-                .accommodation(dummyHouse3).build();
+                .petsAllowed(true).build();
+        dummyHouse3Top.setAccommodation(dummyHouse3);
         SafetyAmenities dummyHouse3SA = SafetyAmenities.builder()
                 .carbonMonoxideAlarm(true)
                 .smokeAlarm(true)
                 .fireExtinguisher(true)
                 .firstAidKit(true)
-                .emergencyPlanAndLocalNumbers(true)
-                .accommodation(dummyHouse3).build();
+                .emergencyPlanAndLocalNumbers(true).build();
+        dummyHouse3SA.setAccommodation(dummyHouse3);
         AccessibilityAmenities dummyHouse3AA = AccessibilityAmenities.builder()
                 .stepFreeEntryway(true)
                 .wideEntrances(true)
                 .wideHallways(true)
-                .accessibleBathroom(true)
-                .accommodation(dummyHouse3).build();
+                .accessibleBathroom(true).build();
+        dummyHouse3AA.setAccommodation(dummyHouse3);
         basicAmenitiesList.add(dummyHouse1BA);
         topAmenitiesGuestsSearchForList.add(dummyHouse1Top);
         safetyAmenitiesList.add(dummyHouse1SA);

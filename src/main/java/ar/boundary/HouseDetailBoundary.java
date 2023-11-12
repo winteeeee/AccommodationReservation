@@ -6,7 +6,6 @@ import ar.entity.*;
 import ar.util.Printer;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 public class HouseDetailBoundary extends Boundary {

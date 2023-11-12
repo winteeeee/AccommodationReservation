@@ -10,9 +10,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class TopAmenitiesGuestsSearchFor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@DiscriminatorValue("Top")
+public class TopAmenitiesGuestsSearchFor extends Amenities {
     private Long id;
     private boolean pool;
     private boolean wifi;
@@ -24,6 +23,4 @@ public class TopAmenitiesGuestsSearchFor {
     private boolean selfCheckIn;
     private boolean laptopFriendlyWorkspace;
     private boolean petsAllowed;
-    @OneToOne
-    private Accommodation accommodation;
 }

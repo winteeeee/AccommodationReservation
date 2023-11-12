@@ -7,8 +7,6 @@ import ar.util.Dummy;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Scanner;
-
 @Getter
 @Setter
 public class AccommodationReservationApp {

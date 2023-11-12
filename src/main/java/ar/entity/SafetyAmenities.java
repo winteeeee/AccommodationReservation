@@ -10,15 +10,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class SafetyAmenities {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@DiscriminatorValue("Safety")
+public class SafetyAmenities extends Amenities {
     private boolean carbonMonoxideAlarm;
     private boolean smokeAlarm;
     private boolean fireExtinguisher;
     private boolean firstAidKit;
     private boolean emergencyPlanAndLocalNumbers;
-    @OneToOne
-    private Accommodation accommodation;
 }

@@ -3,9 +3,6 @@ package ar.boundary;
 import ar.AccommodationReservationApp;
 import ar.control.ReservationControl;
 import ar.entity.*;
-import ar.util.Keyboard;
-
-import java.time.LocalDateTime;
 
 public class HouseReserveBoundary extends Boundary {
     private Accommodation accommodation;

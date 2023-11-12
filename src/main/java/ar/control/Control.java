@@ -1,13 +1,14 @@
 package ar.control;
 
+import ar.entity.BaseEntity;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import javax.persistence.*;
-import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Control<T, K> {
+public abstract class Control<T extends BaseEntity, K> {
     protected static EntityManagerFactory emf = Persistence.createEntityManagerFactory("ar");
     protected static EntityManager em;
     protected static JPAQueryFactory query;
@@ -47,7 +48,11 @@ public abstract class Control<T, K> {
     }
 
     public T save(T entity) {
-        ReturnTransaction<T> fun = () -> em.merge(entity);
+        ReturnTransaction<T> fun = () -> {
+            entity.setCreatedDate(LocalDateTime.now());
+            return em.merge(entity);
+        };
+
         return transactionStart(fun);
     }
 
@@ -55,6 +60,7 @@ public abstract class Control<T, K> {
         ReturnTransaction<List<T>> fun = () -> {
             List<T> list = new ArrayList<>();
             entities.forEach((e) -> {
+                e.setCreatedDate(LocalDateTime.now());
                 list.add(em.merge(e));
             });
 

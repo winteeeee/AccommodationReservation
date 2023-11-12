@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class Review {
+public class Review extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

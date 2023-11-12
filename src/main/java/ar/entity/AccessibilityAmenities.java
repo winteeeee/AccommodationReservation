@@ -10,14 +10,11 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class AccessibilityAmenities {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+@DiscriminatorValue("Accessibility")
+public class AccessibilityAmenities extends Amenities {
     private Long id;
     private boolean stepFreeEntryway;
     private boolean wideEntrances;
     private boolean wideHallways;
     private boolean accessibleBathroom;
-    @OneToOne
-    private Accommodation accommodation;
 }

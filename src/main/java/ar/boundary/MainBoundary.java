@@ -5,9 +5,6 @@ import ar.control.MemberControl;
 import ar.entity.Member;
 import ar.entity.RoleType;
 import ar.util.ErrorMessages;
-import ar.util.Keyboard;
-
-import java.util.Scanner;
 
 public class MainBoundary extends Boundary {
     private MemberControl memberControl;

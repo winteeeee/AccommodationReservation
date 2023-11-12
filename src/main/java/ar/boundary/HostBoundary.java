@@ -4,10 +4,8 @@ import ar.AccommodationReservationApp;
 import ar.control.*;
 import ar.entity.*;
 import ar.util.ErrorMessages;
-import ar.util.Keyboard;
 
 import java.util.List;
-import java.util.Scanner;
 
 public class HostBoundary extends Boundary {
     private Member host;

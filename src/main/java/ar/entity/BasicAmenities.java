@@ -10,16 +10,12 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Builder
-public class BasicAmenities {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+@DiscriminatorValue("Basic")
+public class BasicAmenities extends Amenities {
     private boolean toiletPaper;
     private boolean soapForHandsAndBody;
     private boolean oneTowelPerGuest;
     private boolean linensForEachBed;
     private boolean onePillowPerGuest;
     private boolean cleaningSupplies;
-    @OneToOne
-    private Accommodation accommodation;
 }
