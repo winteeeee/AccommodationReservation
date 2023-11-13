@@ -24,24 +24,19 @@ public class FindHouseBoundary extends Boundary{
     }
 
     private DateInfo getCheckInOutInfo() {
-        System.out.print("체크인 날짜 입력(yyyy-MM-dd) : ");
-        LocalDateTime checkIn = Keyboard.nextLocalDateTime();
-
-        System.out.print("체크아웃 날짜 입력(yyyy-MM-dd) : ");
-        LocalDateTime checkOut = Keyboard.nextLocalDateTime();
+        System.out.print("체크인 날짜 입력(yyyy-MM-dd) : "); LocalDateTime checkIn = Keyboard.nextLocalDateTime();
+        System.out.print("체크아웃 날짜 입력(yyyy-MM-dd) : "); LocalDateTime checkOut = Keyboard.nextLocalDateTime();
 
         return new DateInfo(checkIn, checkOut);
     }
 
     private Integer getPerson() {
-        System.out.print("인원 입력(null은 0 입력) : ");
-        Integer person = sc.nextInt();
+        System.out.print("인원 입력(null은 0 입력) : "); Integer person = sc.nextInt();
         return person == 0 ? null : person;
     }
 
     private SpaceType getSpaceType() {
-        System.out.print("숙소 유형 입력(0 - 공간 전체, 1 - 개인실, 이외 - null) : ");
-        int spaceTypeIdx = sc.nextInt();
+        System.out.print("숙소 유형 입력(0 - 공간 전체, 1 - 개인실, 이외 - null) : "); int spaceTypeIdx = sc.nextInt();
         return spaceTypeIdx != 0 && spaceTypeIdx != 1 ? null : SpaceType.values()[spaceTypeIdx];
     }
 
@@ -88,12 +83,10 @@ public class FindHouseBoundary extends Boundary{
             System.out.println("2. 숙소 예약");
             System.out.println("3. 돌아가기");
             System.out.println("==============================");
-            System.out.print("입력 : ");
+            System.out.print("입력 : "); int command = sc.nextInt();
 
-            int command = sc.nextInt();
             if (command == HOUSE_DETAIL || command == HOUSE_RESERVE) {
-                System.out.print("숙소 선택 : ");
-                int idx = sc.nextInt();
+                System.out.print("숙소 선택 : "); int idx = sc.nextInt();
 
                 if (idx >= list.size()) {
                     ErrorMessages.indexOutOfBound();

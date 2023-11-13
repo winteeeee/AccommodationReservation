@@ -23,10 +23,8 @@ public class RegistReviewBoundary extends Boundary {
         System.out.println("==============================");
         System.out.println("리뷰를 등록합니다.");
         System.out.println("==============================");
-        System.out.print("별점 입력 : ");
-        Byte start = sc.nextByte(); sc.nextLine();
-        System.out.print("후기 입력 : ");
-        String review = sc.nextLine();
+        System.out.print("별점 입력 : "); Byte start = sc.nextByte(); sc.nextLine();
+        System.out.print("후기 입력 : "); String review = sc.nextLine();
 
         Review reviewEntity = Review.builder()
                 .reservation(reservation)

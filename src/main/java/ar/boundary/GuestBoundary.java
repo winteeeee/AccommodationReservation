@@ -25,9 +25,8 @@ public class GuestBoundary extends Boundary{
         System.out.println("2. 예약 조회");
         System.out.println("3. 로그아웃");
         System.out.println("==============================");
-        System.out.print("입력 : ");
+        System.out.print("입력 : "); int command = sc.nextInt();
 
-        int command = sc.nextInt();
         if (command == FIND_HOUSE) {
             app.setBoundary(new FindHouseBoundary(app, this));
         } else if (command == FIND_RESERVATION) {

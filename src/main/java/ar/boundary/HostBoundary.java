@@ -25,8 +25,7 @@ public class HostBoundary extends Boundary {
         for (int i = 1; i <= list.size(); i++) {
             System.out.println(i + " : " + list.get(i - 1).getName());
         }
-        System.out.print("입력 : ");
-        int idx = sc.nextInt() - 1;
+        System.out.print("입력 : "); int idx = sc.nextInt() - 1;
 
         return list.get(idx);
     }
@@ -45,9 +44,8 @@ public class HostBoundary extends Boundary {
         System.out.println("3. 매출 확인");
         System.out.println("4. 로그아웃");
         System.out.println("==============================");
-        System.out.print("입력 : ");
+        System.out.print("입력 : "); int command = sc.nextInt();
 
-        int command = sc.nextInt();
         if (command == REGIST_HOUSE) {
             app.setBoundary(new RegistHouseBoundary(app, this, host));
         } else if (command == SET_DISCOUNT_POLICY || command == SHOW_REVENUE) {

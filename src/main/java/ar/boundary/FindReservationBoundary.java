@@ -45,9 +45,8 @@ public class FindReservationBoundary extends Boundary {
         System.out.println("3. 체크인 예정 예약 조회");
         System.out.println("4. 돌아가기");
         System.out.println("==============================");
-        System.out.print("입력 : ");
+        System.out.print("입력 : "); int command = sc.nextInt();
 
-        int command = sc.nextInt();
         if (command == FIND_ALL || command == FIND_CHECKOUT_COMPLETE || command == FIND_CHECKIN_SCHEDULED) {
             List<Reservation> list;
             if (command == FIND_ALL) {

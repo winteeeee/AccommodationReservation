@@ -29,8 +29,7 @@ public class ShowRevenueBoundary extends Boundary {
             BigDecimal revenue = reservationControl.findSumOfRevenueByAccommodationAndYearAndMonth(accommodation, LocalDate.now().getYear(), month);
             Printer.showReservationStatus(accommodation, month, roomCount);
             System.out.println(LocalDate.now().getYear() + "년 " + month + "월의 총 매출 : " + revenue);
-            System.out.print("추가 예약 현황을 볼 달 입력(1 ~ 12 이외의 값 입력 시 종료) : ");
-            month = sc.nextInt();
+            System.out.print("추가 예약 현황을 볼 달 입력(1 ~ 12 이외의 값 입력 시 종료) : "); month = sc.nextInt();
         }
         System.out.println("==============================");
         returnToParent();

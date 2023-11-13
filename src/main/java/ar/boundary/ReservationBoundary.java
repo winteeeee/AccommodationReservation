@@ -26,9 +26,8 @@ public class ReservationBoundary extends Boundary {
         System.out.println("2. 후기 등록");
         System.out.println("3. 돌아가기");
         System.out.println("==============================");
-        System.out.print("입력 : ");
+        System.out.print("입력 : "); int command = sc.nextInt();
 
-        int command = sc.nextInt();
         if (command == CANCEL_RESERVATION || command == REGIST_REVIEW) {
             System.out.print("예약 선택 : ");
             int idx = sc.nextInt();

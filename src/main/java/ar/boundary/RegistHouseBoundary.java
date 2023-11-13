@@ -27,26 +27,17 @@ public class RegistHouseBoundary extends Boundary {
         System.out.println("==============================");
         System.out.println("숙소를 등록합니다.");
         System.out.println("==============================");
-        System.out.print("숙소 이름 입력 : ");
-        String name = sc.nextLine();
-        System.out.print("숙소 주소 입력 : ");
-        String address = sc.nextLine();
-        System.out.print("숙소 유형 입력(0 - 공간 전체, 1 - 개인실) : ");
-        Integer spaceType = sc.nextInt();
-        System.out.print("수용 인원 입력 : ");
-        Integer accommodatedPerson = sc.nextInt();
-        System.out.print("방 개수 입력 : ");
-        Integer room = sc.nextInt();
-        System.out.print("침실 개수 입력 : ");
-        Integer bedroom = sc.nextInt();
-        System.out.print("욕실 개수 입력 : ");
-        Integer bathroom = sc.nextInt(); sc.nextLine();
-        System.out.print("숙소 소개 입력 : ");
-        String introduction = sc.nextLine();
-        System.out.print("평일 요금 입력 : ");
-        BigDecimal weekdayFare = sc.nextBigDecimal();
-        System.out.print("주말 요금 입력 : ");
-        BigDecimal weekendFare = sc.nextBigDecimal();
+
+        System.out.print("숙소 이름 입력 : "); String name = sc.nextLine();
+        System.out.print("숙소 주소 입력 : "); String address = sc.nextLine();
+        System.out.print("숙소 유형 입력(0 - 공간 전체, 1 - 개인실) : "); Integer spaceType = sc.nextInt();
+        System.out.print("수용 인원 입력 : "); Integer accommodatedPerson = sc.nextInt();
+        System.out.print("방 개수 입력 : "); Integer room = sc.nextInt();
+        System.out.print("침실 개수 입력 : "); Integer bedroom = sc.nextInt();
+        System.out.print("욕실 개수 입력 : "); Integer bathroom = sc.nextInt(); sc.nextLine();
+        System.out.print("숙소 소개 입력 : "); String introduction = sc.nextLine();
+        System.out.print("평일 요금 입력 : "); BigDecimal weekdayFare = sc.nextBigDecimal();
+        System.out.print("주말 요금 입력 : "); BigDecimal weekendFare = sc.nextBigDecimal();
 
         Accommodation house = Accommodation.builder()
                 .spaceType(SpaceType.values()[spaceType])

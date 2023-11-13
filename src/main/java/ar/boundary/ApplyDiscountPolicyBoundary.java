@@ -66,21 +66,16 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
         System.out.println("==============================");
         System.out.println("할인 정책을 수정합니다.");
         System.out.println("==============================");
-        System.out.print("할인 시작일 입력(yyyy-MM-dd) : ");
-        LocalDateTime startDate = Keyboard.nextLocalDateTime();
-        System.out.print("할인 종료일 입력(yyyy-MM-dd) : ");
-        LocalDateTime endDate = Keyboard.nextLocalDateTime();
+        System.out.print("할인 시작일 입력(yyyy-MM-dd) : "); LocalDateTime startDate = Keyboard.nextLocalDateTime();
+        System.out.print("할인 종료일 입력(yyyy-MM-dd) : "); LocalDateTime endDate = Keyboard.nextLocalDateTime();
         if (endDate.isEqual(startDate) || endDate.isBefore(startDate)) {
             ErrorMessages.inverseEndDate();
             returnToParent();
             return;
         }
 
-        System.out.print("할인 유형 입력(0 - 정량 할인, 1 - 정률 할인) : ");
-        int isQuantitativeDiscount = sc.nextInt();
-        System.out.print("할인량 입력 : ");
-        BigDecimal discountFare = sc.nextBigDecimal();
-
+        System.out.print("할인 유형 입력(0 - 정량 할인, 1 - 정률 할인) : "); int isQuantitativeDiscount = sc.nextInt();
+        System.out.print("할인량 입력 : "); BigDecimal discountFare = sc.nextBigDecimal();
 
         DateInfo dateInfo = new DateInfo(startDate, endDate);
         discountPolicy.setDateInfo(dateInfo);

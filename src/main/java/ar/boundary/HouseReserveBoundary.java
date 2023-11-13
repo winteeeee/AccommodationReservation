@@ -36,8 +36,7 @@ public class HouseReserveBoundary extends Boundary {
             System.out.println("주어진 숙소는 공간 전체 대여이므로 모든 방이 예약됩니다.");
             room = accommodation.getRoom();
         } else if (accommodation.getSpaceType() == SpaceType.PRIVATE_ROOM) {
-            System.out.print("몇 개의 방을 이용하시겠습니까? : ");
-            room = sc.nextInt();
+            System.out.print("몇 개의 방을 이용하시겠습니까? : "); room = sc.nextInt();
 
             if (room > accommodation.getRoom()) {
                 ErrorMessages.maximumRoomOverError();
@@ -46,8 +45,7 @@ public class HouseReserveBoundary extends Boundary {
         }
 
         if (person == null) {
-            System.out.print("인원 입력 : ");
-            person = sc.nextInt();
+            System.out.print("인원 입력 : "); person = sc.nextInt();
         }
 
         Reservation reservation = Reservation.builder()

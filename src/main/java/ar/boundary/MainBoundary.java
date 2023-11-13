@@ -21,10 +21,8 @@ public class MainBoundary extends Boundary {
             System.out.println("==============================");
             System.out.println("로그인합니다.");
             System.out.println("==============================");
-            System.out.print("아이디 입력 : ");
-            String id = sc.next();
-            System.out.print("비밀번호 입력 : ");
-            String password = sc.next();
+            System.out.print("아이디 입력 : "); String id = sc.next();
+            System.out.print("비밀번호 입력 : "); String password = sc.next();
 
             result = memberControl.login(id, password);
             if (result == null) {
@@ -45,9 +43,8 @@ public class MainBoundary extends Boundary {
         System.out.println("1. 로그인");
         System.out.println("2. 종료");
         System.out.println("==============================");
-        System.out.print("입력 : ");
+        System.out.print("입력 : "); int command = sc.nextInt();
 
-        int command = sc.nextInt();
         if (command == LOGIN) {
             Member member = login();
             app.setSignedMember(member);
