@@ -45,6 +45,11 @@ public class HouseReserveBoundary extends Boundary {
             }
         }
 
+        if (person == null) {
+            System.out.print("인원 입력 : ");
+            person = sc.nextInt();
+        }
+
         Reservation reservation = Reservation.builder()
                                             .guest(app.getSignedMember())
                                             .accommodation(accommodation)
