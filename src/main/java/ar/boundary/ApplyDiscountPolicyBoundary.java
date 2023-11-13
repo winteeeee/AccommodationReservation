@@ -1,10 +1,12 @@
 package ar.boundary;
 
 import ar.AccommodationReservationApp;
+import ar.control.AccommodationControl;
 import ar.control.DiscountPolicyControl;
 import ar.entity.Accommodation;
 import ar.entity.DateInfo;
 import ar.entity.DiscountPolicy;
+import ar.util.ErrorMessages;
 import ar.util.Keyboard;
 
 import java.math.BigDecimal;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 
 public class ApplyDiscountPolicyBoundary extends Boundary {
     private Accommodation accommodation;
+    private AccommodationControl accommodationControl;
     private DiscountPolicyControl discountPolicyControl;
 
 
@@ -19,6 +22,7 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
         super(app, parent);
         this.parent = parent;
         this.accommodation = accommodation;
+        accommodationControl = new AccommodationControl();
         discountPolicyControl = new DiscountPolicyControl();
     }
 
@@ -66,6 +70,12 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
         LocalDateTime startDate = Keyboard.nextLocalDateTime();
         System.out.print("할인 종료일 입력(yyyy-MM-dd) : ");
         LocalDateTime endDate = Keyboard.nextLocalDateTime();
+        if (endDate.isEqual(startDate) || endDate.isBefore(startDate)) {
+            ErrorMessages.inverseEndDate();
+            returnToParent();
+            return;
+        }
+
         System.out.print("할인 유형 입력(0 - 정량 할인, 1 - 정률 할인) : ");
         int isQuantitativeDiscount = sc.nextInt();
         System.out.print("할인량 입력 : ");
@@ -81,9 +91,11 @@ public class ApplyDiscountPolicyBoundary extends Boundary {
             discountPolicy.setFixedRateDiscount(discountFare);
         }
         discountPolicy.setAccommodation(accommodation);
-        discountPolicyControl.save(discountPolicy);
+        discountPolicy = discountPolicyControl.save(discountPolicy);
         System.out.println("할인 정책 수정 완료");
 
+        accommodation.setDiscountPolicy(discountPolicy);
+        accommodationControl.save(accommodation);
         calPrice();
         returnToParent();
     }

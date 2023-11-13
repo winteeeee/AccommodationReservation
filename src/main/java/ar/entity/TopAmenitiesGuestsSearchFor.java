@@ -3,6 +3,7 @@ package ar.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @NoArgsConstructor

@@ -3,6 +3,7 @@ package ar.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
 
 @Entity
 @NoArgsConstructor
@@ -12,7 +13,6 @@ import javax.persistence.*;
 @Builder
 @DiscriminatorValue("Accessibility")
 public class AccessibilityAmenities extends Amenities {
-    private Long id;
     private boolean stepFreeEntryway;
     private boolean wideEntrances;
     private boolean wideHallways;

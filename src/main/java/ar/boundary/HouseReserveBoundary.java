@@ -3,6 +3,9 @@ package ar.boundary;
 import ar.AccommodationReservationApp;
 import ar.control.ReservationControl;
 import ar.entity.*;
+import ar.util.ErrorMessages;
+
+import java.math.BigDecimal;
 
 public class HouseReserveBoundary extends Boundary {
     private Accommodation accommodation;
@@ -35,6 +38,11 @@ public class HouseReserveBoundary extends Boundary {
         } else if (accommodation.getSpaceType() == SpaceType.PRIVATE_ROOM) {
             System.out.print("몇 개의 방을 이용하시겠습니까? : ");
             room = sc.nextInt();
+
+            if (room > accommodation.getRoom()) {
+                ErrorMessages.maximumRoomOverError();
+                returnToParent();
+            }
         }
 
         Reservation reservation = Reservation.builder()
@@ -44,7 +52,7 @@ public class HouseReserveBoundary extends Boundary {
                                             .dateInfo(checkInOutInfo)
                                             .person(person)
                                             .room(room)
-                                            .fare(accommodationDTO.getPrice()).build();
+                                            .fare(accommodationDTO.getPrice().multiply(BigDecimal.valueOf(room))).build();
         reservationControl.save(reservation);
         System.out.println("숙소 예약이 완료되었습니다!");
         returnToParent();

@@ -36,7 +36,7 @@ public class FindHouseBoundary extends Boundary{
     private Integer getPerson() {
         System.out.print("인원 입력(null은 0 입력) : ");
         Integer person = sc.nextInt();
-        return person = person == 0 ? null : person;
+        return person == 0 ? null : person;
     }
 
     private SpaceType getSpaceType() {
@@ -64,6 +64,12 @@ public class FindHouseBoundary extends Boundary{
         System.out.println("==============================");
 
         DateInfo dateInfo = getCheckInOutInfo();
+        if (dateInfo.getEndDate().isEqual(dateInfo.getStartDate()) || dateInfo.getEndDate().isBefore(dateInfo.getStartDate())) {
+            ErrorMessages.inverseEndDate();
+            returnToParent();
+            return;
+        }
+
         Integer person = getPerson();
         SpaceType spaceType = getSpaceType();
         list = accommodationControl.findByCondition(dateInfo, person, spaceType);

@@ -17,8 +17,7 @@ public class ErrorMessages {
     }
 
     public static void inverseEndDate() {
-        //TODO 사용
-        System.out.println("[오류] 끝 날짜는 시작 날짜보다 빠를 수 없습니다.");
+        System.out.println("[오류] 끝 날짜는 시작 날짜 이후여야 합니다.");
     }
 
     public static void invalidDateFormat() {
@@ -27,5 +26,9 @@ public class ErrorMessages {
 
     public static void completedReservationError() {
         System.out.println("[오류] 체크아웃이 완료된 예약은 취소할 수 없습니다.");
+    }
+
+    public static void maximumRoomOverError() {
+        System.out.println("[오류] 최대 방 개수 이상을 예약할 수 없습니다.");
     }
 }

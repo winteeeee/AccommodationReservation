@@ -13,7 +13,7 @@ public class ReviewControl extends Control<Review, Long> {
     public List<Review> findByReservations(List<Reservation> reservations) {
         QReservation qReservation = QReservation.reservation;
 
-        ReturnTransaction<List<Review>> fun = () -> {
+        Transaction<List<Review>> fun = (em, query) -> {
             List<Review> reviews = new ArrayList<>();
             reservations.forEach((reservation) -> {
                 Review cur = query.selectFrom(qReview)

@@ -4,13 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Entity
+@javax.persistence.Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Review extends BaseEntity {
+public class Review extends Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

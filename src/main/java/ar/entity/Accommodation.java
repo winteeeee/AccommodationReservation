@@ -6,13 +6,13 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
 
-@Entity
+@javax.persistence.Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Accommodation extends BaseEntity {
+public class Accommodation extends Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
@@ -32,4 +32,6 @@ public class Accommodation extends BaseEntity {
     private BigDecimal weekendFare;
     @OneToMany(mappedBy = "accommodation")
     private List<Reservation> reservations;
+    @OneToOne(fetch = FetchType.LAZY)
+    private DiscountPolicy discountPolicy;
 }

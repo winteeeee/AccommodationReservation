@@ -5,13 +5,13 @@ import lombok.*;
 import javax.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
+@javax.persistence.Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Reservation extends BaseEntity {
+public class Reservation extends Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

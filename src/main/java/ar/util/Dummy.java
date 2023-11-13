@@ -4,6 +4,7 @@ import ar.control.*;
 import ar.entity.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,8 @@ public class Dummy {
         TopAmenitiesGuestsSearchForControl topAmenitiesGuestsSearchForControl = new TopAmenitiesGuestsSearchForControl();
         SafetyAmenitiesControl safetyAmenitiesControl = new SafetyAmenitiesControl();
         AccessibilityAmenitiesControl accessibilityAmenitiesControl = new AccessibilityAmenitiesControl();
+        ReservationControl reservationControl = new ReservationControl();
+        ReviewControl reviewControl = new ReviewControl();
 
         List<Member> hostList = new ArrayList<>();
         Member dummyHost1 = new Member();
@@ -148,6 +151,7 @@ public class Dummy {
                 .fireExtinguisher(true)
                 .firstAidKit(true)
                 .emergencyPlanAndLocalNumbers(true).build();
+        dummyHouse1SA.setAccommodation(dummyHouse1);
         AccessibilityAmenities dummyHouse1AA = AccessibilityAmenities.builder()
                 .stepFreeEntryway(true)
                 .wideEntrances(true)
@@ -237,5 +241,148 @@ public class Dummy {
         topAmenitiesGuestsSearchForControl.save(topAmenitiesGuestsSearchForList);
         safetyAmenitiesControl.save(safetyAmenitiesList);
         accessibilityAmenitiesControl.save(accessibilityAmenitiesList);
+
+        List<Reservation> reservations = new ArrayList<>();
+        Reservation reservation1_1 = Reservation.builder()
+                .guest(dummyGuest1)
+                .accommodation(dummyHouse1)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 1, 0, 0), LocalDateTime.of(2023, 11, 2, 0, 0)))
+                .person(10)
+                .room(5)
+                .fare(BigDecimal.valueOf(50000)).build();
+        Reservation reservation1_2 = Reservation.builder()
+                .guest(dummyGuest2)
+                .accommodation(dummyHouse1)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 4, 0, 0), LocalDateTime.of(2023, 11, 5, 0, 0)))
+                .person(2)
+                .room(1)
+                .fare(BigDecimal.valueOf(20000)).build();
+        Reservation reservation1_3 = Reservation.builder()
+                .guest(dummyGuest3)
+                .accommodation(dummyHouse1)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 4, 0, 0), LocalDateTime.of(2023, 11, 5, 0, 0)))
+                .person(4)
+                .room(2)
+                .fare(BigDecimal.valueOf(40000)).build();
+        Reservation reservation2_1 = Reservation.builder()
+                .guest(dummyGuest1)
+                .accommodation(dummyHouse2)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 1, 0, 0), LocalDateTime.of(2023, 11, 2, 0, 0)))
+                .person(2)
+                .room(1)
+                .fare(BigDecimal.valueOf(6000)).build();
+        Reservation reservation2_2 = Reservation.builder()
+                .guest(dummyGuest2)
+                .accommodation(dummyHouse2)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 4, 0, 0), LocalDateTime.of(2023, 11, 5, 0, 0)))
+                .person(1)
+                .room(1)
+                .fare(BigDecimal.valueOf(10000)).build();
+        Reservation reservation2_3 = Reservation.builder()
+                .guest(dummyGuest3)
+                .accommodation(dummyHouse2)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 6, 0, 0), LocalDateTime.of(2023, 11, 10, 0, 0)))
+                .person(4)
+                .room(1)
+                .fare(BigDecimal.valueOf(15000)).build();
+        Reservation reservation3_1 = Reservation.builder()
+                .guest(dummyGuest1)
+                .accommodation(dummyHouse3)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 1, 0, 0), LocalDateTime.of(2023, 11, 2, 0, 0)))
+                .person(6)
+                .room(2)
+                .fare(BigDecimal.valueOf(20000)).build();
+        Reservation reservation3_2 = Reservation.builder()
+                .guest(dummyGuest2)
+                .accommodation(dummyHouse3)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 4, 0, 0), LocalDateTime.of(2023, 11, 5, 0, 0)))
+                .person(2)
+                .room(2)
+                .fare(BigDecimal.valueOf(60000)).build();
+        Reservation reservation3_3 = Reservation.builder()
+                .guest(dummyGuest3)
+                .accommodation(dummyHouse3)
+                .review(null)
+                .dateInfo(new DateInfo(LocalDateTime.of(2023, 11, 6, 0, 0), LocalDateTime.of(2023, 11, 10, 0, 0)))
+                .person(4)
+                .room(2)
+                .fare(BigDecimal.valueOf(50000)).build();
+        reservations.add(reservation1_1);
+        reservations.add(reservation1_2);
+        reservations.add(reservation1_3);
+        reservations.add(reservation2_1);
+        reservations.add(reservation2_2);
+        reservations.add(reservation2_3);
+        reservations.add(reservation3_1);
+        reservations.add(reservation3_2);
+        reservations.add(reservation3_3);
+        reservations = reservationControl.save(reservations);
+
+        List<Review> reviews = new ArrayList<>();
+        Review review1_1 = Review.builder()
+                .reservation(reservations.get(0))
+                .star((byte) 5)
+                .review("와! 너무 좋아요!").build();
+        Review review1_2 = Review.builder()
+                .reservation(reservations.get(1))
+                .star((byte) 5)
+                .review("깨끗하고 너무 좋았습니다 ^^ 다음에도 올게요.").build();
+        Review review1_3 = Review.builder()
+                .reservation(reservations.get(2))
+                .star((byte) 5)
+                .review("진짜 최고입니다;; 너무 만족했어요").build();
+        Review review2_1 = Review.builder()
+                .reservation(reservations.get(3))
+                .star((byte) 3)
+                .review("솔직히 마음에 들진 않지만.. 가격 생각하면 괜찮은 것 같습니다.").build();
+        Review review2_2 = Review.builder()
+                .reservation(reservations.get(4))
+                .star((byte) 1)
+                .review("절대 안올거같아요. 일단 너무 더럽네요.").build();
+        Review review2_3 = Review.builder()
+                .reservation(reservations.get(5))
+                .star((byte) 4)
+                .review("출장와서 편히 쉬다갑니다.").build();
+        Review review3_1 = Review.builder()
+                .reservation(reservations.get(6))
+                .star((byte) 5)
+                .review("친구 생일파티했는데 너무 쾌적했어요!").build();
+        Review review3_2 = Review.builder()
+                .reservation(reservations.get(7))
+                .star((byte) 4)
+                .review("시내랑도 가깝고 좋아요").build();
+        Review review3_3 = Review.builder()
+                .reservation(reservations.get(8))
+                .star((byte) 3)
+                .review("여자친구가 깨끗하다고 만족했어요! 저도 마음에 들었습니다.").build();
+        reviews.add(review1_1);
+        reviews.add(review1_2);
+        reviews.add(review1_3);
+        reviews.add(review2_1);
+        reviews.add(review2_2);
+        reviews.add(review2_3);
+        reviews.add(review3_1);
+        reviews.add(review3_2);
+        reviews.add(review3_3);
+        reviews = reviewControl.save(reviews);
+
+        reservations.get(0).setReview(reviews.get(0));
+        reservations.get(1).setReview(reviews.get(1));
+        reservations.get(2).setReview(reviews.get(2));
+        reservations.get(3).setReview(reviews.get(3));
+        reservations.get(4).setReview(reviews.get(4));
+        reservations.get(5).setReview(reviews.get(5));
+        reservations.get(6).setReview(reviews.get(6));
+        reservations.get(7).setReview(reviews.get(7));
+        reservations.get(8).setReview(reviews.get(8));
+        reservationControl.save(reservations);
     }
 }

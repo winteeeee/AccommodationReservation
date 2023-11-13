@@ -13,11 +13,11 @@ import java.util.List;
 public class ReservationControl extends Control<Reservation, Long> {
     private QReservation qReservation = QReservation.reservation;
 
-    public BooleanExpression joinCheck(Long id) {
+    private BooleanExpression joinCheck(Long id) {
         return QAccommodation.accommodation.id.eq(id);
     }
 
-    public BooleanExpression betweenCheckByDay(int year, int month, int day) {
+    private BooleanExpression betweenCheckByDay(int year, int month, int day) {
         LocalDateTime curDay = LocalDateTime.of(year, month, day, 0, 0);
 
         return qReservation.dateInfo.startDate.eq(curDay)
@@ -25,7 +25,7 @@ public class ReservationControl extends Control<Reservation, Long> {
                 .or(qReservation.dateInfo.startDate.before(curDay).and(qReservation.dateInfo.endDate.after(curDay)));
     }
 
-    public BooleanExpression betweenCheckByMonth(int year, int month) {
+    private BooleanExpression betweenCheckByMonth(int year, int month) {
         LocalDateTime startDay = LocalDateTime.of(year, month, 1, 0, 0);
         LocalDateTime endDay = startDay.plusMonths(1).minusSeconds(1);
 
@@ -35,7 +35,7 @@ public class ReservationControl extends Control<Reservation, Long> {
     }
 
     public List<Integer> findSumOfRoomByAccommodationAndYearAndMonth(Accommodation accommodation, int year, int month) {
-        ReturnTransaction<List<Integer>> fun = () -> {
+        Transaction<List<Integer>> fun = (em, query) -> {
             List<Integer> list = new ArrayList<>();
             Calendar cal = Calendar.getInstance();
             cal.set(LocalDate.now().getYear(), month - 1, 1);
@@ -56,7 +56,7 @@ public class ReservationControl extends Control<Reservation, Long> {
     }
 
     public BigDecimal findSumOfRevenueByAccommodationAndYearAndMonth(Accommodation accommodation, int year, int month) {
-        ReturnTransaction<BigDecimal> fun = () -> query.select(qReservation.fare.sum())
+        Transaction<BigDecimal> fun = (em, query) -> query.select(qReservation.fare.sum())
                                                         .from(qReservation)
                                                         .where(joinCheck(accommodation.getId()).and(betweenCheckByMonth(year, month)))
                                                         .fetchOne();
@@ -69,7 +69,7 @@ public class ReservationControl extends Control<Reservation, Long> {
     }
 
     public List<Reservation> findByMember(Member guest) {
-        ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
+        Transaction<List<Reservation>> fun = (em, query) -> query.selectFrom(qReservation)
                                                                 .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
                                                                 .leftJoin(qReservation.review, QReview.review1).fetchJoin()
                                                                 .where(memberIdMatching(guest))
@@ -81,7 +81,7 @@ public class ReservationControl extends Control<Reservation, Long> {
 
     public List<Reservation> findTerminatedByMember(Member guest) {
         LocalDateTime now = LocalDateTime.now();
-        ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
+        Transaction<List<Reservation>> fun = (em, query) -> query.selectFrom(qReservation)
                                                                 .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
                                                                 .leftJoin(qReservation.review, QReview.review1).fetchJoin()
                                                                 .where(memberIdMatching(guest).and(qReservation.dateInfo.endDate.before(now)))
@@ -93,7 +93,7 @@ public class ReservationControl extends Control<Reservation, Long> {
 
     public List<Reservation> findOncomingByMember(Member guest) {
         LocalDateTime now = LocalDateTime.now();
-        ReturnTransaction<List<Reservation>> fun = () -> query.selectFrom(qReservation)
+        Transaction<List<Reservation>> fun = (em, query) -> query.selectFrom(qReservation)
                                                                 .join(qReservation.accommodation, QAccommodation.accommodation).fetchJoin()
                                                                 .leftJoin(qReservation.review, QReview.review1).fetchJoin()
                                                                 .where(memberIdMatching(guest).and(qReservation.dateInfo.startDate.after(now)))

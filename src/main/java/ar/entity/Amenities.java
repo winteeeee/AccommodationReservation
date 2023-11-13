@@ -7,13 +7,13 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity
+@javax.persistence.Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class Amenities extends BaseEntity {
+public abstract class Amenities extends Entity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
