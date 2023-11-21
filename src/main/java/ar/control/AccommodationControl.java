@@ -85,8 +85,8 @@ public class AccommodationControl extends Control<Accommodation, Long> {
                             .leftJoin(qAccommodation.reservations, qReservation)
                             .leftJoin(qReservation.review, qReview)
                             .where(personCheck(person), spaceTypeCheck(spaceType))
-                            .groupBy(qAccommodation.name)
-                            .orderBy(priceCase.asc(), qReview.star.avg().asc())
+                            .groupBy(qAccommodation.id)
+                            .orderBy(priceCase.desc(), qReview.star.avg().desc())
                             .fetch();
         };
         return transactionStart(fun);
